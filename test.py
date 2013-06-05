@@ -36,13 +36,16 @@ class deregister:
 
 class register:
     def POST(self):
-        i = web.input()
+        i = web.data()
+        return i
 
 class add:
     def GET(self, name):
+        cmd = "python hemlock.py user-list"
+        a = os.popen(cmd).read()
         if not name: 
             name = 'World'
-        return 'Hello, ' + name + '!'
+        return a
 
 class get:
     def GET(self, name):
@@ -58,7 +61,7 @@ class remove:
 
 class create:
     def POST(self):
-        i = web.input()
+        i = web.data()
 
 class delete:
     def GET(self, name):
