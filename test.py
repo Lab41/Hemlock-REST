@@ -3,8 +3,8 @@
 import os, web
         
 urls = (
-    '/add/system/(.*)/tenant', 'add',
-    '/add/user/(.*)/tenant', 'add',
+    '/add/system/(.*)/tenant/(.*)', 'add',
+    '/add/user/(.*)/tenant/(.*)', 'add',
     '/create/tenant', 'create',
     '/create/user', 'create',
     '/delete/tenant/(.*)', 'delete',
@@ -35,10 +35,8 @@ class deregister:
         return 'Hello, ' + name + '!'
 
 class register:
-    def GET(self, name):
-        if not name: 
-            name = 'World'
-        return 'Hello, ' + name + '!'
+    def POST(self):
+        i = web.input()
 
 class add:
     def GET(self, name):
@@ -50,7 +48,7 @@ class get:
     def GET(self, name):
         if not name: 
             name = 'World'
-        return 'Hello, ' + name + '!'
+        return web.ctx['fullpath']+'Hello, ' + name + '!'
 
 class remove:
     def GET(self, name):
@@ -59,10 +57,8 @@ class remove:
         return 'Hello, ' + name + '!'
 
 class create:
-    def GET(self, name):
-        if not name: 
-            name = 'World'
-        return 'Hello, ' + name + '!'
+    def POST(self):
+        i = web.input()
 
 class delete:
     def GET(self, name):
