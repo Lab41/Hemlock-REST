@@ -40,11 +40,10 @@ class register:
         return i
 
 class add:
-    def GET(self, name):
+    def GET(self, first, second):
+        # !! TODO a better way would be ot make hemlock.py a class and import the class/functions needed
         cmd = "python hemlock.py user-list"
         a = os.popen(cmd).read()
-        if not name: 
-            name = 'World'
         return a
 
 class get:
