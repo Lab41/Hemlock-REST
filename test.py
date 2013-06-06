@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, web
+import os, subprocess, web
         
 urls = (
     '/add/system/(.*)/tenant/(.*)', 'add',
@@ -45,7 +45,15 @@ class add:
 
 class create:
     def POST(self):
-        i = web.data()
+        data = web.data()
+        if "tenant" in web.ctx['fullpath']:
+            cmd = "python hemlock.py tenant-create --name "+data['name']
+            return os.popen(cmd).read()
+        elif "user" in web.ctx['fullpath']:
+            cmd = "python hemlock.py user-create --name "+data['name']+" --username "+data['username']+" --email "+data['email']+" --tenant_id "+data['tenant_id']
+            p = subprocess.Popen(cmd,stdin=subprocess.PIPE)
+            return p.communicate(data['password'])
+        return
 
 class delete:
     def GET(self, uuid):
@@ -97,8 +105,12 @@ class list2:
 
 class register:
     def POST(self):
-        i = web.data()
-        return i
+        data = web.data()
+        if "local" in web.ctx['fullpath']:
+            cmd = "python hemlock.py register-local-system --name "+data['name']+" --data_type "+data['data_type']+" --description "+data['description']+" --tenant_id "+data['tenant_id']+" --hostname "+data['hostname']+" --endpoint "+data['endpoint']+" --poc_name "+data['poc_name']+" --poc_email "+data['poc_email']
+        elif "remote" in web.ctx['fullpath']:
+            cmd = "python hemlock.py register-remote-system --name "+data['name']+" --data_type "+data['data_type']+" --description "+data['description']+" --tenant_id "+data['tenant_id']+" --hostname "+data['hostname']+" --port "+data['port']+" --remote_uri "+data['remote_uri']+" --poc_name "+data['poc_name']+" --poc_email "+data['poc_email']
+        return os.popen(cmd).read()
 
 class remove:
     def GET(self, first, second):
