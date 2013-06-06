@@ -73,9 +73,15 @@ class list1:
 
 class list2:
     def GET(self, uuid):
-        cmd = "python hemlock.py user-list"
-        a = os.popen(cmd).read()
-        return 'Hello, ' + name + '!'
+        if "system" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
+            cmd = "python hemlock.py system-tenants-list --uuid"+uuid
+        elif "tenant" in web.ctx['fullpath'] and "systems" in web.ctx['fullpath']:
+            cmd = "python hemlock.py tenant-systems-list --uuid"+uuid
+        elif "tenant" in web.ctx['fullpath'] and "users" in web.ctx['fullpath']:
+            cmd = "python hemlock.py tenant-users-list -- uuid"+uuid
+        elif "user" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
+            cmd = "python hemlock.py user-tenants-list --uuid"+uuid
+        return os.popen(cmd).read()
 
 class register:
     def POST(self):
