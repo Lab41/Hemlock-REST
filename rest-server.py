@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import ast, os, subprocess, web
+import ast, os, pexpect, web
         
 urls = (
     '/add/system/(.*)/tenant/(.*)', 'add',
@@ -52,8 +52,10 @@ class create:
             return os.popen(cmd).read()
         elif "user" in web.ctx['fullpath']:
             cmd = "python hemlock.py user-create --name "+data['name']+" --username "+data['username']+" --email "+data['email']+" --tenant_id "+data['tenant_id']
-            p = subprocess.Popen(cmd,stdin=subprocess.PIPE)
-            return p.communicate(data['password'])
+            child = pexpect.spawn(cmd)
+            child.expect('Password:')
+            child.sendline(data['password'])
+            return child.read()
         return
 
 class delete:
