@@ -37,29 +37,41 @@ class favicon:
 
 class add:
     def GET(self, first, second):
-        return "!"
+        if "system" in web.ctx['fullpath']:
+            cmd = "python hemlock.py system-add-tenant --uuid "+first+" --tenant_id "+second
+        elif "user" in web.ctx['fullpath']:
+            cmd = "python hemlock.py user-add-tenant --uuid "+first+" --tenant_id "+second
+        return os.popen(cmd).read()
 
 class create:
     def POST(self):
         i = web.data()
 
 class delete:
-    def GET(self, name):
-        if not name: 
-            name = 'World'
-        return 'Hello, ' + name + '!'
+    def GET(self, uuid):
+        if "system" in web.ctx['fullpath']:
+            cmd = "python hemlock.py system-delete --uuid "+uuid
+        elif "user" in web.ctx['fullpath']:
+            cmd = "python hemlock.py user-delete --uuid "+uuid
+        return os.popen(cmd).read()
 
 class deregister:
-    def GET(self, name):
-        if not name: 
-            name = 'World'
-        return 'Hello, ' + name + '!'
+    def GET(self, uuid):
+        if "local" in web.ctx['fullpath']:
+            cmd = "python hemlock.py deregister-local-system --uuid "+uuid
+        elif "remote" in web.ctx['fullpath']:
+            cmd = "python hemlock.py deregister-remote-system --uuid "+uuid
+        return os.popen(cmd).read()
 
 class get:
-    def GET(self, name):
-        if not name: 
-            name = 'World'
-        return web.ctx['fullpath']+'Hello, ' + name + '!'
+    def GET(self, uuid):
+        if "system" in web.ctx['fullpath']:
+            cmd = "python hemlock.py system-get --uuid "+uuid
+        elif "tenant" in web.ctx['fullpath']:
+            cmd = "python hemlock.py tenant-get --uuid "+uuid
+        elif "user" in web.ctx['fullpath']:
+            cmd = "python hemlock.py user-get --uuid "+uuid
+        return os.popen(cmd).read()
 
 class list1:
     def GET(self):
@@ -89,10 +101,12 @@ class register:
         return i
 
 class remove:
-    def GET(self, name):
-        if not name: 
-            name = 'World'
-        return 'Hello, ' + name + '!'
+    def GET(self, first, second):
+        if "system" in web.ctx['fullpath']:
+            cmd = "python hemlock.py system-remove-tenant --uuid "+first+" --tenant_id "+second
+        elif "user" in web.ctx['fullpath']:
+            cmd = "python hemlock.py user-remove-tenant --uuid "+first+" --tenant_id "+second
+        return os.popen(cmd).read()
 
 if __name__ == "__main__":
     app.run()
