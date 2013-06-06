@@ -24,9 +24,15 @@ urls = (
     '/register/local-system', 'register',
     '/register/remote-system', 'register',
     '/remove/system/(.*)/tenant/(.*)', 'remove',
-    '/remove/user/(.*)/tenant/(.*)', 'remove'
+    '/remove/user/(.*)/tenant/(.*)', 'remove',
+    '/favicon.ico','favicon'
 )
 app = web.application(urls, globals())
+
+class favicon: 
+    def GET(self): 
+        f = open("static/favicon.ico", 'rb') 
+        return f.read()
 
 class add:
     def GET(self, first, second):
