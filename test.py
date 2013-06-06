@@ -32,6 +32,7 @@ app = web.application(urls, globals())
 class favicon: 
     def GET(self): 
         f = open("static/favicon.ico", 'rb') 
+        web.header("Content-Type","image/x-icon")
         return f.read()
 
 class add:
