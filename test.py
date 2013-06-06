@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, subprocess, web
+import ast, os, subprocess, web
         
 urls = (
     '/add/system/(.*)/tenant/(.*)', 'add',
@@ -46,6 +46,7 @@ class add:
 class create:
     def POST(self):
         data = web.data()
+        data = ast.literal_eval(data)
         if "tenant" in web.ctx['fullpath']:
             cmd = "python hemlock.py tenant-create --name "+data['name']
             return os.popen(cmd).read()
@@ -106,6 +107,7 @@ class list2:
 class register:
     def POST(self):
         data = web.data()
+        data = ast.literal_eval(data)
         if "local" in web.ctx['fullpath']:
             cmd = "python hemlock.py register-local-system --name "+data['name']+" --data_type "+data['data_type']+" --description "+data['description']+" --tenant_id "+data['tenant_id']+" --hostname "+data['hostname']+" --endpoint "+data['endpoint']+" --poc_name "+data['poc_name']+" --poc_email "+data['poc_email']
         elif "remote" in web.ctx['fullpath']:
