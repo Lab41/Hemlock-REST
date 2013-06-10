@@ -79,6 +79,8 @@ class delete:
             cmd = "python hemlock.py system-delete --uuid "+uuid
         elif "user" in web.ctx['fullpath']:
             cmd = "python hemlock.py user-delete --uuid "+uuid
+        elif "tenant" in web.ctx['fullpath']:
+            cmd = "python hemlock.py tenant-delete --uuid "+uuid
         return os.popen(cmd).read()
 
 class deregister:
