@@ -4,26 +4,34 @@ import ast, os, pexpect, web
         
 urls = (
     '/add/system/(.*)/tenant/(.*)', 'add',
+    '/add/user/(.*)/role/(.*)', 'add',
     '/add/user/(.*)/tenant/(.*)', 'add',
+    '/create/role', 'create',
     '/create/tenant', 'create',
     '/create/user', 'create',
+    '/delete/role/(.*)', 'delete',
     '/delete/tenant/(.*)', 'delete',
     '/delete/user/(.*)', 'delete',
     '/deregister/local-system/(.*)', 'deregister',
     '/deregister/remote-system/(.*)', 'deregister',
+    '/get/role/(.*)', 'get',
     '/get/system/(.*)', 'get',
     '/get/tenant/(.*)', 'get',
     '/get/user/(.*)', 'get',
+    '/list/roles', 'list1',
     '/list/systems', 'list1',
     '/list/tenants', 'list1',
     '/list/users', 'list1',
+    '/list/role/users/(.*)', 'list2',
     '/list/system/tenants/(.*)', 'list2',
     '/list/tenant/systems/(.*)', 'list2',
     '/list/tenant/users/(.*)', 'list2',
+    '/list/user/roles/(.*)', 'list2',
     '/list/user/tenants/(.*)', 'list2',
     '/register/local-system', 'register',
     '/register/remote-system', 'register',
     '/remove/system/(.*)/tenant/(.*)', 'remove',
+    '/remove/user/(.*)/role/(.*)', 'remove',
     '/remove/user/(.*)/tenant/(.*)', 'remove',
     '/favicon.ico','favicon'
 )
@@ -39,6 +47,8 @@ class add:
     def GET(self, first, second):
         if "system" in web.ctx['fullpath']:
             cmd = "python hemlock.py system-add-tenant --uuid "+first+" --tenant_id "+second
+        elif "role" in web.ctx['fullpath']:
+            cmd = "python hemlock.py user-add-role --uuid "+first+" --role_id "+second
         elif "user" in web.ctx['fullpath']:
             cmd = "python hemlock.py user-add-tenant --uuid "+first+" --tenant_id "+second
         return os.popen(cmd).read()
@@ -47,11 +57,14 @@ class create:
     def POST(self):
         data = web.data()
         data = ast.literal_eval(data)
-        if "tenant" in web.ctx['fullpath']:
+        if "role" in web.ctx['fullpath']:
+            cmd = "python hemlock.py role-create --name "+data['name']
+            return os.popen(cmd).read()
+        elif "tenant" in web.ctx['fullpath']:
             cmd = "python hemlock.py tenant-create --name "+data['name']
             return os.popen(cmd).read()
         elif "user" in web.ctx['fullpath']:
-            cmd = "python hemlock.py user-create --name "+data['name']+" --username "+data['username']+" --email "+data['email']+" --tenant_id "+data['tenant_id']
+            cmd = "python hemlock.py user-create --name "+data['name']+" --username "+data['username']+" --email "+data['email']+" --role_id "+data['role_id']+" --tenant_id "+data['tenant_id']
             child = pexpect.spawn(cmd)
             child.expect('Password:')
             child.sendline(data['password'])
@@ -60,7 +73,9 @@ class create:
 
 class delete:
     def GET(self, uuid):
-        if "system" in web.ctx['fullpath']:
+        if "role" in web.ctx['fullpath']:
+            cmd = "python hemlock.py role-delete --uuid "+uuid
+        elif "system" in web.ctx['fullpath']:
             cmd = "python hemlock.py system-delete --uuid "+uuid
         elif "user" in web.ctx['fullpath']:
             cmd = "python hemlock.py user-delete --uuid "+uuid
@@ -76,7 +91,9 @@ class deregister:
 
 class get:
     def GET(self, uuid):
-        if "system" in web.ctx['fullpath']:
+        if "role" in web.ctx['fullpath']:
+            cmd = "python hemlock.py role-get --uuid "+uuid
+        elif "system" in web.ctx['fullpath']:
             cmd = "python hemlock.py system-get --uuid "+uuid
         elif "tenant" in web.ctx['fullpath']:
             cmd = "python hemlock.py tenant-get --uuid "+uuid
@@ -86,6 +103,8 @@ class get:
 
 class list1:
     def GET(self):
+        if "roles" in web.ctx['fullpath']:
+            cmd = "python hemlock.py role-list"
         if "systems" in web.ctx['fullpath']:
             cmd = "python hemlock.py system-list"
         elif "tenants" in web.ctx['fullpath']:
@@ -102,6 +121,8 @@ class list2:
             cmd = "python hemlock.py tenant-systems-list --uuid "+uuid
         elif "tenant" in web.ctx['fullpath'] and "users" in web.ctx['fullpath']:
             cmd = "python hemlock.py tenant-users-list --uuid "+uuid
+        elif "user" in web.ctx['fullpath'] and "roles" in web.ctx['fullpath']:
+            cmd = "python hemlock.py user-roles-list --uuid "+uuid
         elif "user" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
             cmd = "python hemlock.py user-tenants-list --uuid "+uuid
         return os.popen(cmd).read()
@@ -118,6 +139,8 @@ class register:
 
 class remove:
     def GET(self, first, second):
+        if "role" in web.ctx['fullpath']:
+            cmd = "python hemlock.py user-remove-role --uuid "+first+" --role_id "+second
         if "system" in web.ctx['fullpath']:
             cmd = "python hemlock.py system-remove-tenant --uuid "+first+" --tenant_id "+second
         elif "user" in web.ctx['fullpath']:
