@@ -43,6 +43,23 @@ class favicon:
         web.header("Content-Type","image/x-icon")
         return f.read()
 
+class search:
+    def GET(self, query):
+        # !! TODO send query to elasticsearch
+        # !! TODO parse response for ids
+        # !! TODO send ids to couchbase
+        # !! TODO return list of json objects
+        return query
+
+class fields:
+    def GET(self):
+        true = True
+        false = False
+        null = None
+        mapping = urllib2.urlopen("http://localhost:9200/_mapping").read()
+        mapping = json.loads(mapping)
+        return sorted(mapping["hemlock"]["couchbaseDocument"]["properties"]["doc"]["properties"].keys())
+        
 class add:
     def GET(self, first, second):
         if "system" in web.ctx['fullpath']:
