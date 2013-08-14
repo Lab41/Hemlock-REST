@@ -140,8 +140,10 @@ class list2:
             cmd = "python hemlock.py tenant-systems-list --uuid "+uuid
         elif "tenant" in web.ctx['fullpath'] and "users" in web.ctx['fullpath']:
             cmd = "python hemlock.py tenant-users-list --uuid "+uuid
-        elif "user" in web.ctx['fullpath'] and "role" in web.ctx['fullpath']:
+        elif "user" in web.ctx['fullpath'] and "roles" in web.ctx['fullpath']:
             cmd = "python hemlock.py user-roles-list --uuid "+uuid
+        elif "role" in web.ctx['fullpath'] and "users" in web.ctx['fullpath']:
+            cmd = "python hemlock.py role-users-list --uuid "+uuid
         elif "user" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
             cmd = "python hemlock.py user-tenants-list --uuid "+uuid
         return os.popen(cmd).read()
