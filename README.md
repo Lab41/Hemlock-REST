@@ -12,7 +12,7 @@ Install instructions
 Required dependencies
 ---------------------
 
-[Hemlock](https://github.com/Lab41/Hemlock/)
+[Hemlock](https://lab41.github.io/Hemlock/)
 
 Python modules:
 - [web](http://webpy.org/)
@@ -30,7 +30,7 @@ webservers.
 Related repositories
 --------------------
 
-- [Hemlock](https://github.com/Lab41/Hemlock/)
+- [Hemlock](https://lab41.github.io/Hemlock/)
 
 Contributing
 ============
