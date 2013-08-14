@@ -4,7 +4,7 @@ Hemlock-REST
 Hemlock REST Server.  Same functionality as the [Hemlock CLI](https://github.com/Lab41/Hemlock/blob/master/docs/CLI.md), but through a
 RESTful interface.
 
-![Hemlock L](docs/images/logo.png "Hemlock")
+![Hemlock L](https://raw.github.com/Lab41/Hemlock-REST/master/docs/images/logo.png "Hemlock")
 
 Install instructions
 ====================
