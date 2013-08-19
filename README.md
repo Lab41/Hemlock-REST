@@ -2,7 +2,7 @@ Hemlock-REST
 ============
 
 Hemlock REST Server.  Same functionality as the [Hemlock CLI](https://github.com/Lab41/Hemlock/blob/master/docs/CLI.md), but through a
-[RESTful](https://github.com/Lab41/Hemlock-REST/blob/master/docs/CLI.md) interface.
+[RESTful](https://github.com/Lab41/Hemlock-REST/blob/master/docs/REST.md) interface.
 
 ![Hemlock L](https://raw.github.com/Lab41/Hemlock-REST/master/docs/images/logo.png "Hemlock")
 
