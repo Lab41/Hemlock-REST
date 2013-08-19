@@ -18,6 +18,7 @@ urls = (
     '/get/system/(.*)', 'get',
     '/get/tenant/(.*)', 'get',
     '/get/user/(.*)', 'get',
+    '/list/all', 'list1',
     '/list/roles', 'list1',
     '/list/systems', 'list1',
     '/list/tenants', 'list1',
@@ -130,6 +131,8 @@ class list1:
             cmd = "python hemlock.py tenant-list"
         elif "users" in web.ctx['fullpath']:
             cmd = "python hemlock.py user-list"
+        elif "all" in web.ctx['fullpath']:
+            cmd = "python hemlock.py list-all"
         return os.popen(cmd).read()
 
 class list2:
