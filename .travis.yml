@@ -1,0 +1,18 @@
+language: python
+python:
+  - "2.7"
+before_install:
+  - source ./scripts/ci/setup_env_hemlock_rest.sh
+  - sudo apt-get update -qq
+install:·
+  - pip install pexpect --use-mirrors
+  - pip install web.py --use-mirrors
+  - pip install hemlock --use-mirrors
+  - pip install pytest --use-mirrors
+script: py.test
+branches:
+  except:
+  - gh-pages
+notifications:
+  email:
+    - charliel@lab41.org
