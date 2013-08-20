@@ -32,37 +32,51 @@
 <a name="hemlock-rest" class="anchor" href="#hemlock-rest"><span class="octicon octicon-link"></span></a>Hemlock-REST</h1>
 
 <p>Hemlock REST Server.  Same functionality as the <a href="https://github.com/Lab41/Hemlock/blob/master/docs/CLI.md">Hemlock CLI</a>, but through a
-RESTful interface.</p>
+<a href="https://github.com/Lab41/Hemlock-REST/blob/master/docs/REST.md">RESTful</a> interface.</p>
 
 <p><img src="https://raw.github.com/Lab41/Hemlock-REST/master/docs/images/logo.png" alt="Hemlock L" title="Hemlock"></p>
 
 <h1>
 <a name="install-instructions" class="anchor" href="#install-instructions"><span class="octicon octicon-link"></span></a>Install instructions</h1>
 
+<div class="highlight"><pre>sudo pip install hemlock-rest
+</pre></div>
+
 <h2>
 <a name="required-dependencies" class="anchor" href="#required-dependencies"><span class="octicon octicon-link"></span></a>Required dependencies</h2>
 
-<p><a href="https://github.com/Lab41/Hemlock/">Hemlock</a></p>
+<p><a href="https://lab41.github.io/Hemlock/">Hemlock</a></p>
 
 <p>Python modules:</p>
 
 <ul>
+<li>pexpect</li>
 <li><a href="http://webpy.org/">web</a></li>
 </ul><h2>
 <a name="running" class="anchor" href="#running"><span class="octicon octicon-link"></span></a>Running</h2>
 
-<div class="highlight"><pre>python rest-server.py 80
+<div class="highlight"><pre>hemlock-rest
 </pre></div>
 
-<p>Alternatively, <code>rest-server.py</code> can be modified to support more robust
+<p>Alternatively, <code>hemlock_rest.py</code> can be modified to support more robust
 webservers.</p>
 
 <h2>
 <a name="related-repositories" class="anchor" href="#related-repositories"><span class="octicon octicon-link"></span></a>Related repositories</h2>
 
 <ul>
-<li><a href="https://github.com/Lab41/Hemlock/">Hemlock</a></li>
+<li><a href="https://lab41.github.io/Hemlock/">Hemlock</a></li>
 </ul><h1>
+<a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h1>
+
+<p>The tests for this project use <a href="http://pytest.org/latest/">py.test</a></p>
+
+<h1>
+<a name="travis-ci-status" class="anchor" href="#travis-ci-status"><span class="octicon octicon-link"></span></a>Travis CI Status</h1>
+
+<p><a href="https://travis-ci.org/Lab41/Hemlock-REST"><img src="https://travis-ci.org/Lab41/Hemlock-REST.png?branch=master" alt="Build Status"></a></p>
+
+<h1>
 <a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h1>
 
 <p>What to contribute?  Awesome!  Issue a pull request or see more details <a href="https://github.com/Lab41/Hemlock-REST/blob/master/CONTRIBUTING.md">here</a>.</p>
