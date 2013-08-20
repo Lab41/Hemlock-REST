@@ -9,21 +9,27 @@ Hemlock REST Server.  Same functionality as the [Hemlock CLI](https://github.com
 Install instructions
 ====================
 
+```bash
+sudo pip install hemlock-rest
+```
+
 Required dependencies
 ---------------------
 
 [Hemlock](https://lab41.github.io/Hemlock/)
 
 Python modules:
+- pexpect
 - [web](http://webpy.org/)
+
 
 Running
 ----------
 
 ```bash
-python rest-server.py 80
+hemlock-rest
 ```
-Alternatively, ``rest-server.py`` can be modified to support more robust
+Alternatively, ``hemlock_rest.py`` can be modified to support more robust
 webservers.
 
 
@@ -31,6 +37,18 @@ Related repositories
 --------------------
 
 - [Hemlock](https://lab41.github.io/Hemlock/)
+
+
+Tests
+=====
+
+The tests for this project use [py.test](http://pytest.org/latest/)
+
+Travis CI Status
+================
+
+[![Build Status](https://travis-ci.org/Lab41/Hemlock-REST.png?branch=master)](https://travis-ci.org/Lab41/Hemlock-REST)
+
 
 Contributing
 ============
