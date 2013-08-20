@@ -4,7 +4,7 @@ python:
 before_install:
   - source ./scripts/ci/setup_env_hemlock_rest.sh
   - sudo apt-get update -qq
-install:·
+install:
   - pip install pexpect --use-mirrors
   - pip install web.py --use-mirrors
   - pip install hemlock --use-mirrors
