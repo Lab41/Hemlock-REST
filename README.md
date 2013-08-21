@@ -16,7 +16,7 @@ sudo pip install hemlock-rest
 Required dependencies
 ---------------------
 
-[Hemlock](https://lab41.github.io/Hemlock/)
+[Hemlock](http://lab41.github.io/Hemlock/)
 
 Python modules:
 - pexpect
@@ -36,7 +36,8 @@ webservers.
 Related repositories
 --------------------
 
-- [Hemlock](https://lab41.github.io/Hemlock/)
+- [Hemlock](http://lab41.github.io/Hemlock/)
+- [Hemlock-Frontend](http://lab41.github.io/Hemlock-Frontend/)
 
 
 Tests
