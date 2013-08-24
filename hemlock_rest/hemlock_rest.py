@@ -31,12 +31,16 @@ class Hemlock_REST():
             '/delete/user/(.*)', 'delete',
             '/deregister/local-system/(.*)', 'deregister',
             '/deregister/remote-system/(.*)', 'deregister',
+            '/get/client/(.*)', 'get',
             '/get/role/(.*)', 'get',
+            '/get/schedule/(.*)', 'get',
             '/get/system/(.*)', 'get',
             '/get/tenant/(.*)', 'get',
             '/get/user/(.*)', 'get',
             '/list/all', 'list1',
+            '/list/clients', 'list1',
             '/list/roles', 'list1',
+            '/list/schedules', 'list1',
             '/list/systems', 'list1',
             '/list/tenants', 'list1',
             '/list/users', 'list1',
@@ -46,11 +50,15 @@ class Hemlock_REST():
             '/list/tenant/users/(.*)', 'list2',
             '/list/user/roles/(.*)', 'list2',
             '/list/user/tenants/(.*)', 'list2',
+            '/purge/client/(.*)', 'remove',
+            '/run/client/(.*)', 'run',
             '/register/local-system', 'register',
             '/register/remote-system', 'register',
             '/remove/system/(.*)/tenant/(.*)', 'remove',
             '/remove/user/(.*)/role/(.*)', 'remove',
             '/remove/user/(.*)/tenant/(.*)', 'remove',
+            '/schedule/client', 'schedule',
+            '/store/client', 'store',
             '/favicon.ico','favicon'
         )
         app = web.application(urls, globals())
@@ -187,6 +195,22 @@ class remove:
             cmd = "hemlock system-remove-tenant --uuid "+first+" --tenant_id "+second
         elif "user" in web.ctx['fullpath']:
             cmd = "hemlock user-remove-tenant --uuid "+first+" --tenant_id "+second
+        return os.popen(cmd).read()
+
+class run:
+    def GET(self):
+        return os.popen(cmd).read()
+
+class schedule:
+    def POST(self):
+        data = web.data()
+        data = ast.literal_eval(data)
+        return os.popen(cmd).read()
+
+class store:
+    def POST(self):
+        data = web.data()
+        data = ast.literal_eval(data)
         return os.popen(cmd).read()
 
 if __name__ == "__main__":
