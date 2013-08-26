@@ -27,6 +27,7 @@ class Hemlock_REST():
             '/create/tenant', 'create',
             '/create/user', 'create',
             '/delete/role/(.*)', 'delete',
+            '/delete/schedule/(.*)', 'delete',
             '/delete/tenant/(.*)', 'delete',
             '/delete/user/(.*)', 'delete',
             '/deregister/local-system/(.*)', 'deregister',
@@ -50,15 +51,15 @@ class Hemlock_REST():
             '/list/tenant/users/(.*)', 'list2',
             '/list/user/roles/(.*)', 'list2',
             '/list/user/tenants/(.*)', 'list2',
-            '/purge/client/(.*)', 'remove',
+            '/purge/client/(.*)', 'delete',
             '/run/client/(.*)', 'run',
             '/register/local-system', 'register',
             '/register/remote-system', 'register',
             '/remove/system/(.*)/tenant/(.*)', 'remove',
             '/remove/user/(.*)/role/(.*)', 'remove',
             '/remove/user/(.*)/tenant/(.*)', 'remove',
-            '/schedule/client', 'schedule',
-            '/store/client', 'store',
+            '/schedule/client', 'create',
+            '/store/client', 'create',
             '/favicon.ico','favicon'
         )
         app = web.application(urls, globals())
@@ -107,6 +108,12 @@ class create:
         elif "tenant" in web.ctx['fullpath']:
             cmd = "hemlock tenant-create --name "+data['name']
             return os.popen(cmd).read()
+        elif "schedule" in web.ctx['fullpath']:
+            cmd = "hemlock client-schedule --name "+data['name']+" --minute "+data['minute']+" --hour "+data['hour']+" --day_of_month "+data['day_of_month']+" --month "+data['month']+" --day_of_week "+data['day_of_week']+" --client_id "+data['client_id']
+            return os.popen(cmd).read()
+        elif "client" in web.ctx['fullpath']:
+            cmd = "hemlock client-store --name "+data['name']+" --type "+data['type']+" --system_id "+data['system_id']+" --credential_file "+data['credential_file']
+            return os.popen(cmd).read()
         elif "user" in web.ctx['fullpath']:
             cmd = "hemlock user-create --name "+data['name']+" --username "+data['username']+" --email "+data['email']+" --role_id "+data['role_id']+" --tenant_id "+data['tenant_id']
             child = pexpect.spawn(cmd)
@@ -125,6 +132,8 @@ class delete:
             cmd = "hemlock user-delete --uuid "+uuid
         elif "tenant" in web.ctx['fullpath']:
             cmd = "hemlock tenant-delete --uuid "+uuid
+        elif "schedule" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-delete --uuid "+uuid
         return os.popen(cmd).read()
 
 class deregister:
@@ -145,6 +154,10 @@ class get:
             cmd = "hemlock tenant-get --uuid "+uuid
         elif "user" in web.ctx['fullpath']:
             cmd = "hemlock user-get --uuid "+uuid
+        elif "client" in web.ctx['fullpath']:
+            cmd = "hemlock client-get --uuid "+uuid
+        elif "schedule" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-get --uuid "+uuid
         return os.popen(cmd).read()
 
 class list1:
@@ -157,6 +170,10 @@ class list1:
             cmd = "hemlock tenant-list"
         elif "users" in web.ctx['fullpath']:
             cmd = "hemlock user-list"
+        elif "clients" in web.ctx['fullpath']:
+            cmd = "hemlock client-list"
+        elif "schedules" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-list"
         elif "all" in web.ctx['fullpath']:
             cmd = "hemlock list-all"
         return os.popen(cmd).read()
@@ -199,18 +216,6 @@ class remove:
 
 class run:
     def GET(self):
-        return os.popen(cmd).read()
-
-class schedule:
-    def POST(self):
-        data = web.data()
-        data = ast.literal_eval(data)
-        return os.popen(cmd).read()
-
-class store:
-    def POST(self):
-        data = web.data()
-        data = ast.literal_eval(data)
         return os.popen(cmd).read()
 
 if __name__ == "__main__":
