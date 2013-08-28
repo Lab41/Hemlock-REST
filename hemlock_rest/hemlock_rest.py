@@ -20,6 +20,8 @@ class Hemlock_REST():
     def __init__(self, port=8080, host="0.0.0.0"):
         # !! TODO check for environment variables for hemlock.py
         urls = (
+            '/add/client/(.*)/schedule/(.*)', 'add',
+            '/add/schedule/(.*)/client/(.*)', 'add',
             '/add/system/(.*)/tenant/(.*)', 'add',
             '/add/user/(.*)/role/(.*)', 'add',
             '/add/user/(.*)/tenant/(.*)', 'add',
@@ -45,29 +47,36 @@ class Hemlock_REST():
             '/list/systems', 'list1',
             '/list/tenants', 'list1',
             '/list/users', 'list1',
+            '/list/client/schedules/(.*)', 'list2',
+            '/list/client/systems/(.*)', 'list2',
             '/list/role/users/(.*)', 'list2',
+            '/list/schedule/clients/(.*)', 'list2',
+            '/list/system/clients/(.*)', 'list2',
             '/list/system/tenants/(.*)', 'list2',
             '/list/tenant/systems/(.*)', 'list2',
             '/list/tenant/users/(.*)', 'list2',
             '/list/user/roles/(.*)', 'list2',
             '/list/user/tenants/(.*)', 'list2',
             '/purge/client/(.*)', 'delete',
-            '/run/client/(.*)', 'run',
+            '/run/client/(.*)/(.*)', 'run',
             '/register/local-system', 'register',
             '/register/remote-system', 'register',
+            '/remove/client/(.*)/schedule/(.*)', 'remove',
+            '/remove/schedule/(.*)/client/(.*)', 'remove',
             '/remove/system/(.*)/tenant/(.*)', 'remove',
             '/remove/user/(.*)/role/(.*)', 'remove',
             '/remove/user/(.*)/tenant/(.*)', 'remove',
             '/schedule/client', 'create',
             '/store/client', 'create',
+            '/store/hemlock-server', 'create',
             '/favicon.ico','favicon'
         )
         app = web.application(urls, globals())
         web.httpserver.runsimple(app.wsgifunc(), (host, port))
 
-class favicon: 
-    def GET(self): 
-        f = open("static/favicon.ico", 'rb') 
+class favicon:
+    def GET(self):
+        f = open("static/favicon.ico", 'rb')
         web.header("Content-Type","image/x-icon")
         return f.read()
 
@@ -87,11 +96,15 @@ class fields:
         mapping = urllib2.urlopen("http://localhost:9200/_mapping").read()
         mapping = json.loads(mapping)
         return sorted(mapping["hemlock"]["couchbaseDocument"]["properties"]["doc"]["properties"].keys())
-        
+
 class add:
     def GET(self, first, second):
         if "system" in web.ctx['fullpath']:
             cmd = "hemlock system-add-tenant --uuid "+first+" --tenant_id "+second
+        elif "add/client" in web.ctx['fullpath']:
+            cmd = "hemlock client-add-schedule --uuid "+first+" --schedule_id "+second
+        elif "add/schedule" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-add-client --uuid "+first+" --client_id "+second
         elif "role" in web.ctx['fullpath']:
             cmd = "hemlock user-add-role --uuid "+first+" --role_id "+second
         elif "user" in web.ctx['fullpath']:
@@ -114,6 +127,9 @@ class create:
         elif "client" in web.ctx['fullpath']:
             cmd = "hemlock client-store --name "+data['name']+" --type "+data['type']+" --system_id "+data['system_id']+" --credential_file "+data['credential_file']
             return os.popen(cmd).read()
+        elif "hemlock-server" in web.ctx['fullpath']:
+            cmd = "hemlock hemlock-server-store --credential_file "+data['credential_file']
+            return os.popen(cmd).read()
         elif "user" in web.ctx['fullpath']:
             cmd = "hemlock user-create --name "+data['name']+" --username "+data['username']+" --email "+data['email']+" --role_id "+data['role_id']+" --tenant_id "+data['tenant_id']
             child = pexpect.spawn(cmd)
@@ -134,6 +150,8 @@ class delete:
             cmd = "hemlock tenant-delete --uuid "+uuid
         elif "schedule" in web.ctx['fullpath']:
             cmd = "hemlock schedule-delete --uuid "+uuid
+        elif "client" in web.ctx['fullpath']:
+            cmd = "hemlock client-purge --uuid "+uuid
         return os.popen(cmd).read()
 
 class deregister:
@@ -192,6 +210,14 @@ class list2:
             cmd = "hemlock role-users-list --uuid "+uuid
         elif "user" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
             cmd = "hemlock user-tenants-list --uuid "+uuid
+        elif "client" in web.ctx['fullpath'] and "schedules" in web.ctx['fullpath']:
+            cmd = "hemlock client-schedules-list --uuid "+uuid
+        elif "client" in web.ctx['fullpath'] and "systems" in web.ctx['fullpath']:
+            cmd = "hemlock client-systems-list --uuid "+uuid
+        elif "schedule" in web.ctx['fullpath'] and "clients" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-clients-list --uuid "+uuid
+        elif "system" in web.ctx['fullpath'] and "clients" in web.ctx['fullpath']:
+            cmd = "hemlock system-clients-list --uuid "+uuid
         return os.popen(cmd).read()
 
 class register:
@@ -212,10 +238,15 @@ class remove:
             cmd = "hemlock system-remove-tenant --uuid "+first+" --tenant_id "+second
         elif "user" in web.ctx['fullpath']:
             cmd = "hemlock user-remove-tenant --uuid "+first+" --tenant_id "+second
+        elif "remove/client" in web.ctx['fullpath']:
+            cmd = "hemlock client-remove-schedule --uuid "+first+" --schedule_id "+second
+        elif "remove/schedule" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-remove-client --uuid "+first+" --client_id "+second
         return os.popen(cmd).read()
 
 class run:
-    def GET(self):
+    def GET(self, first, second):
+        cmd = "hemlock client-run --uuid "+first+" --client "+second
         return os.popen(cmd).read()
 
 if __name__ == "__main__":
