@@ -9,6 +9,7 @@ install:
   - pip install web.py --use-mirrors
   - pip install hemlock --use-mirrors
   - pip install pytest --use-mirrors
+  - pip install hemlock-rest --use-mirrors
 script: py.test
 branches:
   except:

@@ -25,13 +25,13 @@ class MyInstall(install):
 
 setup(
     name='hemlock-rest',
-    version='0.1.1',
+    version='0.1.2',
     author=u'Charlie Lewis',
     author_email='charliel@lab41.org',
     description='Hemlock is a way of providing a common data access layer. This is a RESTful server for Hemlock.',
     url='http://lab41.github.io/Hemlock-REST',
     packages=['hemlock_rest'],
-    scripts=['bin/hemlock-rest', 'scripts/ci/setup_env_hemlock_rest.sh'],
+    scripts=['bin/hemlock-rest', 'scripts/ci/setup_env_hemlock_rest.sh', 'scripts/bin/distro'],
     license='LICENSE.txt',
     long_description=open('README.md').read(),
     keywords='hemlock metadata cache heterogeneous restful api'.split(),
