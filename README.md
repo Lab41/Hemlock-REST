@@ -1,6 +1,6 @@
 Hemlock-REST
 ============
-[![PyPI version](https://badge.fury.io/py/hemlock-rest.png)](http://badge.fury.io/py/hemlock-rest) [![Build Status](https://travis-ci.org/Lab41/Hemlock-REST.png?branch=master)](https://travis-ci.org/Lab41/Hemlock-REST) [![downloads](https://pypip.in/d/hemlock-rest/badge.png)](http://crate.io/packages/hemlock-rest/)
+[![PyPI version](https://badge.fury.io/py/hemlock-rest.png)](http://badge.fury.io/py/hemlock-rest) [![Build Status](https://travis-ci.org/Lab41/Hemlock-REST.png?branch=master)](https://travis-ci.org/Lab41/Hemlock-REST) [![downloads](https://pypip.in/d/hemlock-rest/badge.png)](http://crate.io/packages/hemlock-rest/) [![Coverage Status](https://coveralls.io/repos/Lab41/Hemlock-REST/badge.png?branch=master)](https://coveralls.io/r/Lab41/Hemlock-REST?branch=master)
 
 
 Hemlock REST Server.  Same functionality as the [Hemlock CLI](https://github.com/Lab41/Hemlock/blob/master/docs/CLI.md), but through a
