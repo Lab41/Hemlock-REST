@@ -9,8 +9,14 @@ install:
   - pip install web.py --use-mirrors
   - pip install hemlock --use-mirrors
   - pip install pytest --use-mirrors
+  - pip install pytest-cov --use-mirrors
+  - pip install python-coveralls --use-mirrors
   - pip install hemlock-rest --use-mirrors
-script: py.test
+before_script:
+  - py.test --cov=hemlock_rest
+script: py.test -v --cov hemlock_rest --cov-report term-missing
+after_success:
+  - coveralls
 branches:
   except:
   - gh-pages
