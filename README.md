@@ -1,5 +1,7 @@
 Hemlock-REST
 ============
+[![PyPI version](https://badge.fury.io/py/hemlock-rest.png)](http://badge.fury.io/py/hemlock-rest) [![Build Status](https://travis-ci.org/Lab41/Hemlock-REST.png?branch=master)](https://travis-ci.org/Lab41/Hemlock-REST) [![downloads](https://pypip.in/d/hemlock-rest/badge.png)](http://crate.io/packages/hemlock-rest/)
+
 
 Hemlock REST Server.  Same functionality as the [Hemlock CLI](https://github.com/Lab41/Hemlock/blob/master/docs/CLI.md), but through a
 [RESTful](https://github.com/Lab41/Hemlock-REST/blob/master/docs/REST.md) interface.
@@ -44,11 +46,6 @@ Tests
 =====
 
 The tests for this project use [py.test](http://pytest.org/latest/)
-
-Travis CI Status
-================
-
-[![Build Status](https://travis-ci.org/Lab41/Hemlock-REST.png?branch=master)](https://travis-ci.org/Lab41/Hemlock-REST)
 
 
 Contributing
