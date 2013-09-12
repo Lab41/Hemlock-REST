@@ -58,6 +58,7 @@ class Hemlock_REST():
             '/list/user/roles/(.*)', 'list2',
             '/list/user/tenants/(.*)', 'list2',
             '/purge/client/(.*)', 'delete',
+            '/query/data/(.*)', 'query',
             '/run/client/(.*)/(.*)', 'run',
             '/register/local-system', 'register',
             '/register/remote-system', 'register',
@@ -80,7 +81,7 @@ class favicon:
         web.header("Content-Type","image/x-icon")
         return f.read()
 
-class search:
+class query:
     def GET(self, query):
         # !! TODO send query to elasticsearch
         # !! TODO parse response for ids
