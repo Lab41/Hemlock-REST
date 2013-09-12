@@ -251,4 +251,5 @@ class run:
         return os.popen(cmd).read()
 
 if __name__ == "__main__":
-    app.run()
+    hemlock_rest = Hemlock_REST()
+    hemlock_rest.app.run()
