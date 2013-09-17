@@ -82,11 +82,42 @@ class favicon:
         return f.read()
 
 class query:
-    def GET(self, query):
+    def POST(self, query):
         # !! TODO send query to elasticsearch
         # !! TODO parse response for ids
         # !! TODO send ids to couchbase
         # !! TODO return list of json objects
+        data = web.data()
+        data = ast.literal_eval(data)
+        # curl example:
+        #
+        # curl -XPOST "http://l41-vsrv-es01.b.internal:9200/hemlock/_search" -d'
+        # {
+        #   "size": 200,
+        #    "query": {
+        #       "bool": {
+        #          "must_not": [
+        #             {
+        #                "match": {
+        #                   "doc.hemlock-system": "4991f644-e94d-472e-8526-c7f08a656735"
+        #                }
+        #             },
+        #             {
+        #                "match": {
+        #                   "doc.hemlock-system": "59822f6b-4646-4dd8-9be9-038c2988375a"
+        #                }
+        #             }
+        #          ],
+        #          "should": [
+        #             {
+        #                "match": {
+        #                   "_all": "foo"
+        #                }
+        #             }
+        #          ]
+        #       }
+        #    }
+        # }'
         return query
 
 class fields:
