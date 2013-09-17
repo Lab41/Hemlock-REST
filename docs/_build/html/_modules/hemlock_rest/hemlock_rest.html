@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>hemlock_rest.hemlock_rest &mdash; Hemlock-REST 0.1.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Hemlock-REST 0.1.3 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Hemlock-REST 0.1.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for hemlock_rest.hemlock_rest</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c">#</span>
+<span class="c">#   Copyright (c) 2013 In-Q-Tel, Inc/Lab41, All Rights Reserved.</span>
+<span class="c">#</span>
+<span class="c">#   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c">#   you may not use this file except in compliance with the License.</span>
+<span class="c">#   You may obtain a copy of the License at</span>
+<span class="c">#</span>
+<span class="c">#       http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c">#</span>
+<span class="c">#   Unless required by applicable law or agreed to in writing, software</span>
+<span class="c">#   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c">#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c">#   See the License for the specific language governing permissions and</span>
+<span class="c">#   limitations under the License.</span>
+
+<span class="kn">import</span> <span class="nn">ast</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pexpect</span><span class="o">,</span> <span class="nn">web</span>
+
+<div class="viewcode-block" id="Hemlock_REST"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.Hemlock_REST">[docs]</a><span class="k">class</span> <span class="nc">Hemlock_REST</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&quot;0.0.0.0&quot;</span><span class="p">):</span>
+        <span class="c"># !! TODO check for environment variables for hemlock.py</span>
+        <span class="n">urls</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;/add/client/(.*)/schedule/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;add&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/add/schedule/(.*)/client/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;add&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/add/system/(.*)/tenant/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;add&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/add/user/(.*)/role/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;add&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/add/user/(.*)/tenant/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;add&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/create/role&#39;</span><span class="p">,</span> <span class="s">&#39;create&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/create/tenant&#39;</span><span class="p">,</span> <span class="s">&#39;create&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/create/user&#39;</span><span class="p">,</span> <span class="s">&#39;create&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/delete/role/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;delete&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/delete/schedule/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;delete&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/delete/tenant/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;delete&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/delete/user/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;delete&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/deregister/local-system/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;deregister&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/deregister/remote-system/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;deregister&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/get/client/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/get/role/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/get/schedule/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/get/system/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/get/tenant/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/get/user/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/all&#39;</span><span class="p">,</span> <span class="s">&#39;list1&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/clients&#39;</span><span class="p">,</span> <span class="s">&#39;list1&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/roles&#39;</span><span class="p">,</span> <span class="s">&#39;list1&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/schedules&#39;</span><span class="p">,</span> <span class="s">&#39;list1&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/systems&#39;</span><span class="p">,</span> <span class="s">&#39;list1&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/tenants&#39;</span><span class="p">,</span> <span class="s">&#39;list1&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/users&#39;</span><span class="p">,</span> <span class="s">&#39;list1&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/client/schedules/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;list2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/client/systems/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;list2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/role/users/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;list2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/schedule/clients/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;list2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/system/clients/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;list2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/system/tenants/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;list2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/tenant/systems/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;list2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/tenant/users/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;list2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/user/roles/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;list2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/list/user/tenants/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;list2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/purge/client/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;delete&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/query/data/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;query&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/run/client/(.*)/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;run&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/register/local-system&#39;</span><span class="p">,</span> <span class="s">&#39;register&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/register/remote-system&#39;</span><span class="p">,</span> <span class="s">&#39;register&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/remove/client/(.*)/schedule/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;remove&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/remove/schedule/(.*)/client/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;remove&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/remove/system/(.*)/tenant/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;remove&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/remove/user/(.*)/role/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;remove&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/remove/user/(.*)/tenant/(.*)&#39;</span><span class="p">,</span> <span class="s">&#39;remove&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/schedule/client&#39;</span><span class="p">,</span> <span class="s">&#39;create&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/store/client&#39;</span><span class="p">,</span> <span class="s">&#39;create&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/store/hemlock-server&#39;</span><span class="p">,</span> <span class="s">&#39;create&#39;</span><span class="p">,</span>
+            <span class="s">&#39;/favicon.ico&#39;</span><span class="p">,</span><span class="s">&#39;favicon&#39;</span>
+        <span class="p">)</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">application</span><span class="p">(</span><span class="n">urls</span><span class="p">,</span> <span class="nb">globals</span><span class="p">())</span>
+        <span class="n">web</span><span class="o">.</span><span class="n">httpserver</span><span class="o">.</span><span class="n">runsimple</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">wsgifunc</span><span class="p">(),</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="favicon"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.favicon">[docs]</a><span class="k">class</span> <span class="nc">favicon</span><span class="p">:</span>
+<div class="viewcode-block" id="favicon.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.favicon.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;static/favicon.ico&quot;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+        <span class="n">web</span><span class="o">.</span><span class="n">header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span><span class="s">&quot;image/x-icon&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="query"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.query">[docs]</a><span class="k">class</span> <span class="nc">query</span><span class="p">:</span>
+<div class="viewcode-block" id="query.POST"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.query.POST">[docs]</a>    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="c"># !! TODO send query to elasticsearch</span>
+        <span class="c"># !! TODO parse response for ids</span>
+        <span class="c"># !! TODO send ids to couchbase</span>
+        <span class="c"># !! TODO return list of json objects</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="c"># curl example:</span>
+        <span class="c">#</span>
+        <span class="c"># curl -XPOST &quot;http://l41-vsrv-es01.b.internal:9200/hemlock/_search&quot; -d&#39;</span>
+        <span class="c"># {</span>
+        <span class="c">#   &quot;size&quot;: 200,</span>
+        <span class="c">#    &quot;query&quot;: {</span>
+        <span class="c">#       &quot;bool&quot;: {</span>
+        <span class="c">#          &quot;must_not&quot;: [</span>
+        <span class="c">#             {</span>
+        <span class="c">#                &quot;match&quot;: {</span>
+        <span class="c">#                   &quot;doc.hemlock-system&quot;: &quot;4991f644-e94d-472e-8526-c7f08a656735&quot;</span>
+        <span class="c">#                }</span>
+        <span class="c">#             },</span>
+        <span class="c">#             {</span>
+        <span class="c">#                &quot;match&quot;: {</span>
+        <span class="c">#                   &quot;doc.hemlock-system&quot;: &quot;59822f6b-4646-4dd8-9be9-038c2988375a&quot;</span>
+        <span class="c">#                }</span>
+        <span class="c">#             }</span>
+        <span class="c">#          ],</span>
+        <span class="c">#          &quot;should&quot;: [</span>
+        <span class="c">#             {</span>
+        <span class="c">#                &quot;match&quot;: {</span>
+        <span class="c">#                   &quot;_all&quot;: &quot;foo&quot;</span>
+        <span class="c">#                }</span>
+        <span class="c">#             }</span>
+        <span class="c">#          ]</span>
+        <span class="c">#       }</span>
+        <span class="c">#    }</span>
+        <span class="c"># }&#39;</span>
+        <span class="k">return</span> <span class="n">query</span>
+</div></div>
+<div class="viewcode-block" id="fields"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.fields">[docs]</a><span class="k">class</span> <span class="nc">fields</span><span class="p">:</span>
+<div class="viewcode-block" id="fields.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.fields.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">true</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">false</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">null</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://localhost:9200/_mapping&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s">&quot;hemlock&quot;</span><span class="p">][</span><span class="s">&quot;couchbaseDocument&quot;</span><span class="p">][</span><span class="s">&quot;properties&quot;</span><span class="p">][</span><span class="s">&quot;doc&quot;</span><span class="p">][</span><span class="s">&quot;properties&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</div></div>
+<div class="viewcode-block" id="add"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.add">[docs]</a><span class="k">class</span> <span class="nc">add</span><span class="p">:</span>
+<div class="viewcode-block" id="add.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.add.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock system-add-tenant --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --tenant_id &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">elif</span> <span class="s">&quot;add/client&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-add-schedule --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --schedule_id &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">elif</span> <span class="s">&quot;add/schedule&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock schedule-add-client --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --client_id &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">elif</span> <span class="s">&quot;role&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-add-role --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --role_id &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">elif</span> <span class="s">&quot;user&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-add-tenant --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --tenant_id &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="create"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.create">[docs]</a><span class="k">class</span> <span class="nc">create</span><span class="p">:</span>
+<div class="viewcode-block" id="create.POST"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.create.POST">[docs]</a>    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s">&quot;role&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock role-create --name &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="s">&quot;tenant&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock tenant-create --name &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="s">&quot;schedule&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-schedule --name &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --minute &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;minute&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --hour &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;hour&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --day_of_month &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;day_of_month&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --month &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;month&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --day_of_week &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;day_of_week&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --client_id &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;client_id&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="s">&quot;client&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-store --name &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --type &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --system_id &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;system_id&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --credential_file &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;credential_file&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="s">&quot;hemlock-server&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock hemlock-server-store --credential_file &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;credential_file&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="s">&quot;user&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-create --name &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --username &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;username&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --email &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;email&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --role_id &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;role_id&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --tenant_id &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;tenant_id&#39;</span><span class="p">]</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="n">pexpect</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span><span class="s">&#39;Password:&#39;</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;password&#39;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">child</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">return</span>
+</div></div>
+<div class="viewcode-block" id="delete"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.delete">[docs]</a><span class="k">class</span> <span class="nc">delete</span><span class="p">:</span>
+<div class="viewcode-block" id="delete.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.delete.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&quot;role&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock role-delete --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock system-delete --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;user&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-delete --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;tenant&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock tenant-delete --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;schedule&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock schedule-delete --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;client&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-purge --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="deregister"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.deregister">[docs]</a><span class="k">class</span> <span class="nc">deregister</span><span class="p">:</span>
+<div class="viewcode-block" id="deregister.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.deregister.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&quot;local&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock deregister-local-system --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;remote&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock deregister-remote-system --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="get"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.get">[docs]</a><span class="k">class</span> <span class="nc">get</span><span class="p">:</span>
+<div class="viewcode-block" id="get.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.get.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&quot;role&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock role-get --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock system-get --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;tenant&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock tenant-get --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;user&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-get --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;client&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-get --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;schedule&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock schedule-get --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="list1"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.list1">[docs]</a><span class="k">class</span> <span class="nc">list1</span><span class="p">:</span>
+<div class="viewcode-block" id="list1.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.list1.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&quot;roles&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock role-list&quot;</span>
+        <span class="k">if</span> <span class="s">&quot;systems&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock system-list&quot;</span>
+        <span class="k">elif</span> <span class="s">&quot;tenants&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock tenant-list&quot;</span>
+        <span class="k">elif</span> <span class="s">&quot;users&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-list&quot;</span>
+        <span class="k">elif</span> <span class="s">&quot;clients&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-list&quot;</span>
+        <span class="k">elif</span> <span class="s">&quot;schedules&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock schedule-list&quot;</span>
+        <span class="k">elif</span> <span class="s">&quot;all&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock list-all&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="list2"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.list2">[docs]</a><span class="k">class</span> <span class="nc">list2</span><span class="p">:</span>
+<div class="viewcode-block" id="list2.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.list2.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;tenants&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock system-tenants-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;tenant&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;systems&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock tenant-systems-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;tenant&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;users&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock tenant-users-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;user&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;roles&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-roles-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;role&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;users&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock role-users-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;user&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;tenants&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-tenants-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;client&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;schedules&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-schedules-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;client&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;systems&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-systems-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;schedule&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;clients&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock schedule-clients-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">elif</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;clients&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock system-clients-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="register"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.register">[docs]</a><span class="k">class</span> <span class="nc">register</span><span class="p">:</span>
+<div class="viewcode-block" id="register.POST"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.register.POST">[docs]</a>    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s">&quot;local&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock register-local-system --name &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --data_type &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;data_type&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --description &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;description&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --tenant_id &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;tenant_id&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --hostname &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;hostname&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --endpoint &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;endpoint&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --poc_name &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;poc_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --poc_email &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;poc_email&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="s">&quot;remote&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock register-remote-system --name &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --data_type &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;data_type&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --description &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;description&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --tenant_id &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;tenant_id&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --hostname &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;hostname&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --port &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;port&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --remote_uri &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;remote_uri&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --poc_name &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;poc_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; --poc_email &quot;</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;poc_email&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="remove"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.remove">[docs]</a><span class="k">class</span> <span class="nc">remove</span><span class="p">:</span>
+<div class="viewcode-block" id="remove.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.remove.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&quot;role&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-remove-role --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --role_id &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">if</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock system-remove-tenant --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --tenant_id &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">elif</span> <span class="s">&quot;user&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-remove-tenant --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --tenant_id &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">elif</span> <span class="s">&quot;remove/client&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-remove-schedule --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --schedule_id &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">elif</span> <span class="s">&quot;remove/schedule&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock schedule-remove-client --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --client_id &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.run">[docs]</a><span class="k">class</span> <span class="nc">run</span><span class="p">:</span>
+<div class="viewcode-block" id="run.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.run.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-run --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --client &quot;</span><span class="o">+</span><span class="n">second</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">hemlock_rest</span> <span class="o">=</span> <span class="n">Hemlock_REST</span><span class="p">()</span>
+    <span class="n">hemlock_rest</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Hemlock-REST 0.1.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013 In-Q-Tel, Inc/Lab41, All Rights Reserved..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
