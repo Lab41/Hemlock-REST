@@ -63,9 +63,22 @@
 <span class="c">#   See the License for the specific language governing permissions and</span>
 <span class="c">#   limitations under the License.</span>
 
-<span class="kn">import</span> <span class="nn">ast</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pexpect</span><span class="o">,</span> <span class="nn">web</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module is the web server for running the REST API of Hemlock.</span>
+
+<span class="sd">Created on 20 August 2013</span>
+<span class="sd">@author: Charlie Lewis</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pexpect</span>
+<span class="kn">import</span> <span class="nn">web</span>
 
 <div class="viewcode-block" id="Hemlock_REST"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.Hemlock_REST">[docs]</a><span class="k">class</span> <span class="nc">Hemlock_REST</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for initializing the urls and web server.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&quot;0.0.0.0&quot;</span><span class="p">):</span>
         <span class="c"># !! TODO check for environment variables for hemlock.py</span>
         <span class="n">urls</span> <span class="o">=</span> <span class="p">(</span>
@@ -125,52 +138,45 @@
         <span class="n">web</span><span class="o">.</span><span class="n">httpserver</span><span class="o">.</span><span class="n">runsimple</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">wsgifunc</span><span class="p">(),</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
 </div>
 <div class="viewcode-block" id="favicon"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.favicon">[docs]</a><span class="k">class</span> <span class="nc">favicon</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for rendering the favicon.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="favicon.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.favicon.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        GETs the favicon for http requests.</span>
+
+<span class="sd">        :return: returns the favicon</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;static/favicon.ico&quot;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
         <span class="n">web</span><span class="o">.</span><span class="n">header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span><span class="s">&quot;image/x-icon&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div></div>
 <div class="viewcode-block" id="query"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.query">[docs]</a><span class="k">class</span> <span class="nc">query</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for all data query requests.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="query.POST"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.query.POST">[docs]</a>    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-        <span class="c"># !! TODO send query to elasticsearch</span>
-        <span class="c"># !! TODO parse response for ids</span>
-        <span class="c"># !! TODO send ids to couchbase</span>
-        <span class="c"># !! TODO return list of json objects</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        POSTs the authentication for the query and returns the query respond</span>
+<span class="sd">        specific to the user credentials provided.</span>
+
+<span class="sd">        :return: returns the results of the query</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># !! TODO</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="c"># curl example:</span>
-        <span class="c">#</span>
-        <span class="c"># curl -XPOST &quot;http://l41-vsrv-es01.b.internal:9200/hemlock/_search&quot; -d&#39;</span>
-        <span class="c"># {</span>
-        <span class="c">#   &quot;size&quot;: 200,</span>
-        <span class="c">#    &quot;query&quot;: {</span>
-        <span class="c">#       &quot;bool&quot;: {</span>
-        <span class="c">#          &quot;must_not&quot;: [</span>
-        <span class="c">#             {</span>
-        <span class="c">#                &quot;match&quot;: {</span>
-        <span class="c">#                   &quot;doc.hemlock-system&quot;: &quot;4991f644-e94d-472e-8526-c7f08a656735&quot;</span>
-        <span class="c">#                }</span>
-        <span class="c">#             },</span>
-        <span class="c">#             {</span>
-        <span class="c">#                &quot;match&quot;: {</span>
-        <span class="c">#                   &quot;doc.hemlock-system&quot;: &quot;59822f6b-4646-4dd8-9be9-038c2988375a&quot;</span>
-        <span class="c">#                }</span>
-        <span class="c">#             }</span>
-        <span class="c">#          ],</span>
-        <span class="c">#          &quot;should&quot;: [</span>
-        <span class="c">#             {</span>
-        <span class="c">#                &quot;match&quot;: {</span>
-        <span class="c">#                   &quot;_all&quot;: &quot;foo&quot;</span>
-        <span class="c">#                }</span>
-        <span class="c">#             }</span>
-        <span class="c">#          ]</span>
-        <span class="c">#       }</span>
-        <span class="c">#    }</span>
-        <span class="c"># }&#39;</span>
         <span class="k">return</span> <span class="n">query</span>
 </div></div>
 <div class="viewcode-block" id="fields"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.fields">[docs]</a><span class="k">class</span> <span class="nc">fields</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for all requests about data fields or schemas.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="fields.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.fields.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        GETs the schemas of all data that is stored in Hemlock.</span>
+
+<span class="sd">        :return: returns the fields in all schemas stored in Hemlock</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">true</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="n">false</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="n">null</span> <span class="o">=</span> <span class="bp">None</span>
@@ -179,7 +185,18 @@
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s">&quot;hemlock&quot;</span><span class="p">][</span><span class="s">&quot;couchbaseDocument&quot;</span><span class="p">][</span><span class="s">&quot;properties&quot;</span><span class="p">][</span><span class="s">&quot;doc&quot;</span><span class="p">][</span><span class="s">&quot;properties&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </div></div>
 <div class="viewcode-block" id="add"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.add">[docs]</a><span class="k">class</span> <span class="nc">add</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for all API actions that involve adding something</span>
+<span class="sd">    to something else.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="add.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.add.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the add actions of the API.</span>
+
+<span class="sd">        :param first: the uuid of the first part of the action</span>
+<span class="sd">        :param second: the uuid of the second part of the action</span>
+<span class="sd">        :return: returns the result of the action</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock system-add-tenant --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --tenant_id &quot;</span><span class="o">+</span><span class="n">second</span>
         <span class="k">elif</span> <span class="s">&quot;add/client&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
@@ -193,7 +210,16 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div></div>
 <div class="viewcode-block" id="create"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.create">[docs]</a><span class="k">class</span> <span class="nc">create</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for all API actions that involve creating</span>
+<span class="sd">    someting.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="create.POST"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.create.POST">[docs]</a>    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        POSTs the create actions of the API.</span>
+
+<span class="sd">        :return: returns the result of the action</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">if</span> <span class="s">&quot;role&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
@@ -220,7 +246,17 @@
         <span class="k">return</span>
 </div></div>
 <div class="viewcode-block" id="delete"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.delete">[docs]</a><span class="k">class</span> <span class="nc">delete</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for all API actions that involve deleting</span>
+<span class="sd">    something.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="delete.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.delete.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the delete actions of the API.</span>
+
+<span class="sd">        :param uuid: the uuid of the item being deleted</span>
+<span class="sd">        :return: returns the result of the action</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s">&quot;role&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock role-delete --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
         <span class="k">elif</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
@@ -236,7 +272,16 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div></div>
 <div class="viewcode-block" id="deregister"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.deregister">[docs]</a><span class="k">class</span> <span class="nc">deregister</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for deregistering systems.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="deregister.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.deregister.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the deregister action of the API.</span>
+
+<span class="sd">        :param uuid: the uuid of the system being deregistered</span>
+<span class="sd">        :return: returns the result of the action</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s">&quot;local&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock deregister-local-system --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
         <span class="k">elif</span> <span class="s">&quot;remote&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
@@ -244,7 +289,17 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div></div>
 <div class="viewcode-block" id="get"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.get">[docs]</a><span class="k">class</span> <span class="nc">get</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for all API actions that involve getting</span>
+<span class="sd">    something.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="get.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.get.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the get actions of the API.</span>
+
+<span class="sd">        :param uuid: the uuid of the item to get</span>
+<span class="sd">        :return: returns the result of the action</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s">&quot;role&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock role-get --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
         <span class="k">elif</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
@@ -260,7 +315,16 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div></div>
 <div class="viewcode-block" id="list1"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.list1">[docs]</a><span class="k">class</span> <span class="nc">list1</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for all API actions that involve listing</span>
+<span class="sd">    a type of something.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="list1.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.list1.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the list actions of the API for a given type.</span>
+
+<span class="sd">        :returns: returns the results of the action</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s">&quot;roles&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock role-list&quot;</span>
         <span class="k">if</span> <span class="s">&quot;systems&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
@@ -278,7 +342,17 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div></div>
 <div class="viewcode-block" id="list2"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.list2">[docs]</a><span class="k">class</span> <span class="nc">list2</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for all API actions that involve listing</span>
+<span class="sd">    something specific to something else.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="list2.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.list2.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the list actions of the API specific to a given something.</span>
+
+<span class="sd">        :param uuid: the uuid of the specific item to get a list relative to</span>
+<span class="sd">        :return: returns the results of the action</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;tenants&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock system-tenants-list --uuid &quot;</span><span class="o">+</span><span class="n">uuid</span>
         <span class="k">elif</span> <span class="s">&quot;tenant&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;systems&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
@@ -302,7 +376,15 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div></div>
 <div class="viewcode-block" id="register"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.register">[docs]</a><span class="k">class</span> <span class="nc">register</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsble for registering a system.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="register.POST"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.register.POST">[docs]</a>    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the register action of the API.</span>
+
+<span class="sd">        :return: returns the result of the action</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">if</span> <span class="s">&quot;local&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
@@ -312,7 +394,18 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div></div>
 <div class="viewcode-block" id="remove"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.remove">[docs]</a><span class="k">class</span> <span class="nc">remove</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for all API actions that involve removing</span>
+<span class="sd">    something.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="remove.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.remove.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the remove actions of the API.</span>
+
+<span class="sd">        :param first: the uuid of the first part of the action</span>
+<span class="sd">        :param second: the uuid of the second part of the action</span>
+<span class="sd">        :return: returns the result of the action</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s">&quot;role&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock user-remove-role --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --role_id &quot;</span><span class="o">+</span><span class="n">second</span>
         <span class="k">if</span> <span class="s">&quot;system&quot;</span> <span class="ow">in</span> <span class="n">web</span><span class="o">.</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;fullpath&#39;</span><span class="p">]:</span>
@@ -326,7 +419,18 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div></div>
 <div class="viewcode-block" id="run"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.run">[docs]</a><span class="k">class</span> <span class="nc">run</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for performing a run action of the API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="run.GET"><a class="viewcode-back" href="../../hemlock_rest.html#hemlock_rest.hemlock_rest.run.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+        <span class="c"># !! TODO this needs to be updated and tested</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs the run action of the API.</span>
+
+<span class="sd">        :param first: the uuid of the client to run</span>
+<span class="sd">        :param second: the client type that is to run</span>
+<span class="sd">        :returns: returns the result of the action</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;hemlock client-run --uuid &quot;</span><span class="o">+</span><span class="n">first</span><span class="o">+</span><span class="s">&quot; --client &quot;</span><span class="o">+</span><span class="n">second</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div></div>

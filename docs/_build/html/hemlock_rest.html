@@ -52,138 +52,309 @@
 <h1>hemlock_rest Package<a class="headerlink" href="#hemlock-rest-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-hemlock_rest.hemlock_rest">
 <span id="hemlock-rest-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">hemlock_rest</span></tt> Module<a class="headerlink" href="#module-hemlock_rest.hemlock_rest" title="Permalink to this headline">¶</a></h2>
+<p>This module is the web server for running the REST API of Hemlock.</p>
+<p>Created on 20 August 2013
+&#64;author: Charlie Lewis</p>
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.Hemlock_REST">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">Hemlock_REST</tt><big>(</big><em>port=8080</em>, <em>host='0.0.0.0'</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#Hemlock_REST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.Hemlock_REST" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This class is responsible for initializing the urls and web server.</p>
+</dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.add">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">add</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.add" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for all API actions that involve adding something
+to something else.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.add.GET">
 <tt class="descname">GET</tt><big>(</big><em>first</em>, <em>second</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#add.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.add.GET" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Performs the add actions of the API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>first</strong> &#8211; the uuid of the first part of the action</li>
+<li><strong>second</strong> &#8211; the uuid of the second part of the action</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">returns the result of the action</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.create">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">create</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.create" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for all API actions that involve creating
+someting.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.create.POST">
 <tt class="descname">POST</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#create.POST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.create.POST" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>POSTs the create actions of the API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">returns the result of the action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.delete">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">delete</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.delete" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for all API actions that involve deleting
+something.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.delete.GET">
 <tt class="descname">GET</tt><big>(</big><em>uuid</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#delete.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.delete.GET" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Performs the delete actions of the API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> &#8211; the uuid of the item being deleted</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">returns the result of the action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.deregister">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">deregister</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#deregister"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.deregister" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for deregistering systems.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.deregister.GET">
 <tt class="descname">GET</tt><big>(</big><em>uuid</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#deregister.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.deregister.GET" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Performs the deregister action of the API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> &#8211; the uuid of the system being deregistered</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">returns the result of the action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.favicon">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">favicon</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#favicon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.favicon" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for rendering the favicon.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.favicon.GET">
 <tt class="descname">GET</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#favicon.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.favicon.GET" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>GETs the favicon for http requests.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">returns the favicon</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.fields">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">fields</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.fields" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for all requests about data fields or schemas.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.fields.GET">
 <tt class="descname">GET</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#fields.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.fields.GET" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>GETs the schemas of all data that is stored in Hemlock.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">returns the fields in all schemas stored in Hemlock</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.get">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">get</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.get" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for all API actions that involve getting
+something.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.get.GET">
 <tt class="descname">GET</tt><big>(</big><em>uuid</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#get.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.get.GET" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Performs the get actions of the API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> &#8211; the uuid of the item to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">returns the result of the action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.list1">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">list1</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#list1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.list1" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for all API actions that involve listing
+a type of something.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.list1.GET">
 <tt class="descname">GET</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#list1.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.list1.GET" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Performs the list actions of the API for a given type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">returns the results of the action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.list2">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">list2</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#list2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.list2" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for all API actions that involve listing
+something specific to something else.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.list2.GET">
 <tt class="descname">GET</tt><big>(</big><em>uuid</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#list2.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.list2.GET" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Performs the list actions of the API specific to a given something.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> &#8211; the uuid of the specific item to get a list relative to</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">returns the results of the action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.query">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">query</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.query" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for all data query requests.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.query.POST">
 <tt class="descname">POST</tt><big>(</big><em>query</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#query.POST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.query.POST" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>POSTs the authentication for the query and returns the query respond
+specific to the user credentials provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">returns the results of the query</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.register">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">register</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#register"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.register" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsble for registering a system.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.register.POST">
 <tt class="descname">POST</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#register.POST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.register.POST" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Performs the register action of the API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">returns the result of the action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.remove">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">remove</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.remove" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for all API actions that involve removing
+something.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.remove.GET">
 <tt class="descname">GET</tt><big>(</big><em>first</em>, <em>second</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#remove.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.remove.GET" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Performs the remove actions of the API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>first</strong> &#8211; the uuid of the first part of the action</li>
+<li><strong>second</strong> &#8211; the uuid of the second part of the action</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">returns the result of the action</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hemlock_rest.hemlock_rest.run">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">run</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.run" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>This class is responsible for performing a run action of the API.</p>
+<dl class="method">
 <dt id="hemlock_rest.hemlock_rest.run.GET">
 <tt class="descname">GET</tt><big>(</big><em>first</em>, <em>second</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#run.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.run.GET" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Performs the run action of the API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>first</strong> &#8211; the uuid of the client to run</li>
+<li><strong>second</strong> &#8211; the client type that is to run</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">returns the result of the action</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
