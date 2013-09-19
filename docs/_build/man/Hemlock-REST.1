@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "HEMLOCK-REST" "1" "September 17, 2013" "0.1.3" "Hemlock-REST"
+.TH "HEMLOCK-REST" "1" "September 19, 2013" "0.1.3" "Hemlock-REST"
 .SH NAME
 Hemlock-REST \- Hemlock-REST Documentation
 .
@@ -61,112 +61,253 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 Contents:
 .SH HEMLOCK_REST PACKAGE
 .SS \fBhemlock_rest\fP Module
+.sp
+This module is the web server for running the REST API of Hemlock.
+.sp
+Created on 20 August 2013
+@author: Charlie Lewis
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.Hemlock_REST(port=8080, host=\(aq0.0.0.0\(aq)
+This class is responsible for initializing the urls and web server.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.add
+This class is responsible for all API actions that involve adding something
+to something else.
 .INDENT 7.0
 .TP
 .B GET(first, second)
+Performs the add actions of the API.
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBfirst\fP \-\- the uuid of the first part of the action
+.IP \(bu 2
+\fBsecond\fP \-\- the uuid of the second part of the action
+.UNINDENT
+.TP
+.B Returns
+returns the result of the action
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.create
+This class is responsible for all API actions that involve creating
+someting.
 .INDENT 7.0
 .TP
 .B POST()
+POSTs the create actions of the API.
+.INDENT 7.0
+.TP
+.B Returns
+returns the result of the action
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.delete
+This class is responsible for all API actions that involve deleting
+something.
 .INDENT 7.0
 .TP
 .B GET(uuid)
+Performs the delete actions of the API.
+.INDENT 7.0
+.TP
+.B Parameters
+\fBuuid\fP \-\- the uuid of the item being deleted
+.TP
+.B Returns
+returns the result of the action
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.deregister
+This class is responsible for deregistering systems.
 .INDENT 7.0
 .TP
 .B GET(uuid)
+Performs the deregister action of the API.
+.INDENT 7.0
+.TP
+.B Parameters
+\fBuuid\fP \-\- the uuid of the system being deregistered
+.TP
+.B Returns
+returns the result of the action
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.favicon
+This class is responsible for rendering the favicon.
 .INDENT 7.0
 .TP
 .B GET()
+GETs the favicon for http requests.
+.INDENT 7.0
+.TP
+.B Returns
+returns the favicon
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.fields
+This class is responsible for all requests about data fields or schemas.
 .INDENT 7.0
 .TP
 .B GET()
+GETs the schemas of all data that is stored in Hemlock.
+.INDENT 7.0
+.TP
+.B Returns
+returns the fields in all schemas stored in Hemlock
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.get
+This class is responsible for all API actions that involve getting
+something.
 .INDENT 7.0
 .TP
 .B GET(uuid)
+Performs the get actions of the API.
+.INDENT 7.0
+.TP
+.B Parameters
+\fBuuid\fP \-\- the uuid of the item to get
+.TP
+.B Returns
+returns the result of the action
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.list1
+This class is responsible for all API actions that involve listing
+a type of something.
 .INDENT 7.0
 .TP
 .B GET()
+Performs the list actions of the API for a given type.
+.INDENT 7.0
+.TP
+.B Returns
+returns the results of the action
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.list2
+This class is responsible for all API actions that involve listing
+something specific to something else.
 .INDENT 7.0
 .TP
 .B GET(uuid)
+Performs the list actions of the API specific to a given something.
+.INDENT 7.0
+.TP
+.B Parameters
+\fBuuid\fP \-\- the uuid of the specific item to get a list relative to
+.TP
+.B Returns
+returns the results of the action
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.query
+This class is responsible for all data query requests.
 .INDENT 7.0
 .TP
 .B POST(query)
+POSTs the authentication for the query and returns the query respond
+specific to the user credentials provided.
+.INDENT 7.0
+.TP
+.B Returns
+returns the results of the query
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.register
+This class is responsble for registering a system.
 .INDENT 7.0
 .TP
 .B POST()
+Performs the register action of the API.
+.INDENT 7.0
+.TP
+.B Returns
+returns the result of the action
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.remove
+This class is responsible for all API actions that involve removing
+something.
 .INDENT 7.0
 .TP
 .B GET(first, second)
+Performs the remove actions of the API.
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBfirst\fP \-\- the uuid of the first part of the action
+.IP \(bu 2
+\fBsecond\fP \-\- the uuid of the second part of the action
+.UNINDENT
+.TP
+.B Returns
+returns the result of the action
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B class hemlock_rest.hemlock_rest.run
+This class is responsible for performing a run action of the API.
 .INDENT 7.0
 .TP
 .B GET(first, second)
+Performs the run action of the API.
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBfirst\fP \-\- the uuid of the client to run
+.IP \(bu 2
+\fBsecond\fP \-\- the client type that is to run
+.UNINDENT
+.TP
+.B Returns
+returns the result of the action
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .SS \fBtest_hemlock_rest\fP Module

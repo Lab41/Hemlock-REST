@@ -1,5 +1,5 @@
 .. hemlock_rest documentation master file, created by
-   sphinx-quickstart on Tue Sep 17 16:04:31 2013.
+   sphinx-quickstart on Thu Sep 19 12:11:02 2013.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
