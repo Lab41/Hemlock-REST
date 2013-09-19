@@ -14,9 +14,22 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-import ast, os, pexpect, web
+"""
+This module is the web server for running the REST API of Hemlock.
+
+Created on 20 August 2013
+@author: Charlie Lewis
+"""
+
+import ast
+import os
+import pexpect
+import web
 
 class Hemlock_REST():
+    """
+    This class is responsible for initializing the urls and web server.
+    """
     def __init__(self, port=8080, host="0.0.0.0"):
         # !! TODO check for environment variables for hemlock.py
         urls = (
@@ -76,23 +89,45 @@ class Hemlock_REST():
         web.httpserver.runsimple(app.wsgifunc(), (host, port))
 
 class favicon:
+    """
+    This class is responsible for rendering the favicon.
+    """
     def GET(self):
+        """
+        GETs the favicon for http requests.
+
+        :return: returns the favicon
+        """
         f = open("static/favicon.ico", 'rb')
         web.header("Content-Type","image/x-icon")
         return f.read()
 
 class query:
+    """
+    This class is responsible for all data query requests.
+    """
     def POST(self, query):
-        # !! TODO send query to elasticsearch
-        # !! TODO parse response for ids
-        # !! TODO send ids to couchbase
-        # !! TODO return list of json objects
+        """
+        POSTs the authentication for the query and returns the query respond
+        specific to the user credentials provided.
+
+        :return: returns the results of the query
+        """
+        # !! TODO
         data = web.data()
         data = ast.literal_eval(data)
         return query
 
 class fields:
+    """
+    This class is responsible for all requests about data fields or schemas.
+    """
     def GET(self):
+        """
+        GETs the schemas of all data that is stored in Hemlock.
+
+        :return: returns the fields in all schemas stored in Hemlock
+        """
         true = True
         false = False
         null = None
@@ -101,7 +136,18 @@ class fields:
         return sorted(mapping["hemlock"]["couchbaseDocument"]["properties"]["doc"]["properties"].keys())
 
 class add:
+    """
+    This class is responsible for all API actions that involve adding something
+    to something else.
+    """
     def GET(self, first, second):
+        """
+        Performs the add actions of the API.
+
+        :param first: the uuid of the first part of the action
+        :param second: the uuid of the second part of the action
+        :return: returns the result of the action
+        """
         if "system" in web.ctx['fullpath']:
             cmd = "hemlock system-add-tenant --uuid "+first+" --tenant_id "+second
         elif "add/client" in web.ctx['fullpath']:
@@ -115,7 +161,16 @@ class add:
         return os.popen(cmd).read()
 
 class create:
+    """
+    This class is responsible for all API actions that involve creating
+    someting.
+    """
     def POST(self):
+        """
+        POSTs the create actions of the API.
+
+        :return: returns the result of the action
+        """
         data = web.data()
         data = ast.literal_eval(data)
         if "role" in web.ctx['fullpath']:
@@ -142,7 +197,17 @@ class create:
         return
 
 class delete:
+    """
+    This class is responsible for all API actions that involve deleting
+    something.
+    """
     def GET(self, uuid):
+        """
+        Performs the delete actions of the API.
+
+        :param uuid: the uuid of the item being deleted
+        :return: returns the result of the action
+        """
         if "role" in web.ctx['fullpath']:
             cmd = "hemlock role-delete --uuid "+uuid
         elif "system" in web.ctx['fullpath']:
@@ -158,7 +223,16 @@ class delete:
         return os.popen(cmd).read()
 
 class deregister:
+    """
+    This class is responsible for deregistering systems.
+    """
     def GET(self, uuid):
+        """
+        Performs the deregister action of the API.
+
+        :param uuid: the uuid of the system being deregistered
+        :return: returns the result of the action
+        """
         if "local" in web.ctx['fullpath']:
             cmd = "hemlock deregister-local-system --uuid "+uuid
         elif "remote" in web.ctx['fullpath']:
@@ -166,7 +240,17 @@ class deregister:
         return os.popen(cmd).read()
 
 class get:
+    """
+    This class is responsible for all API actions that involve getting
+    something.
+    """
     def GET(self, uuid):
+        """
+        Performs the get actions of the API.
+
+        :param uuid: the uuid of the item to get
+        :return: returns the result of the action
+        """
         if "role" in web.ctx['fullpath']:
             cmd = "hemlock role-get --uuid "+uuid
         elif "system" in web.ctx['fullpath']:
@@ -182,7 +266,16 @@ class get:
         return os.popen(cmd).read()
 
 class list1:
+    """
+    This class is responsible for all API actions that involve listing
+    a type of something.
+    """
     def GET(self):
+        """
+        Performs the list actions of the API for a given type.
+
+        :returns: returns the results of the action
+        """
         if "roles" in web.ctx['fullpath']:
             cmd = "hemlock role-list"
         if "systems" in web.ctx['fullpath']:
@@ -200,7 +293,17 @@ class list1:
         return os.popen(cmd).read()
 
 class list2:
+    """
+    This class is responsible for all API actions that involve listing
+    something specific to something else.
+    """
     def GET(self, uuid):
+        """
+        Performs the list actions of the API specific to a given something.
+
+        :param uuid: the uuid of the specific item to get a list relative to
+        :return: returns the results of the action
+        """
         if "system" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
             cmd = "hemlock system-tenants-list --uuid "+uuid
         elif "tenant" in web.ctx['fullpath'] and "systems" in web.ctx['fullpath']:
@@ -224,7 +327,15 @@ class list2:
         return os.popen(cmd).read()
 
 class register:
+    """
+    This class is responsble for registering a system.
+    """
     def POST(self):
+        """
+        Performs the register action of the API.
+
+        :return: returns the result of the action
+        """
         data = web.data()
         data = ast.literal_eval(data)
         if "local" in web.ctx['fullpath']:
@@ -234,7 +345,18 @@ class register:
         return os.popen(cmd).read()
 
 class remove:
+    """
+    This class is responsible for all API actions that involve removing
+    something.
+    """
     def GET(self, first, second):
+        """
+        Performs the remove actions of the API.
+
+        :param first: the uuid of the first part of the action
+        :param second: the uuid of the second part of the action
+        :return: returns the result of the action
+        """
         if "role" in web.ctx['fullpath']:
             cmd = "hemlock user-remove-role --uuid "+first+" --role_id "+second
         if "system" in web.ctx['fullpath']:
@@ -248,7 +370,18 @@ class remove:
         return os.popen(cmd).read()
 
 class run:
+    """
+    This class is responsible for performing a run action of the API.
+    """
     def GET(self, first, second):
+        # !! TODO this needs to be updated and tested
+        """
+        Performs the run action of the API.
+
+        :param first: the uuid of the client to run
+        :param second: the client type that is to run
+        :returns: returns the result of the action
+        """
         cmd = "hemlock client-run --uuid "+first+" --client "+second
         return os.popen(cmd).read()
 
