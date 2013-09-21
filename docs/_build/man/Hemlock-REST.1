@@ -97,6 +97,29 @@ returns the result of the action
 .UNINDENT
 .INDENT 0.0
 .TP
+.B class hemlock_rest.hemlock_rest.change
+This class is responsible for changing the server that a schedule runs on.
+.INDENT 7.0
+.TP
+.B GET(first, second)
+Performs the change action of the API.
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBfirst\fP \-\- the uuid of the schedule to change
+.IP \(bu 2
+\fBsecond\fP \-\- the uuid of the server the schedule is being changed to
+.UNINDENT
+.TP
+.B Returns
+returns the result of the action
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
 .B class hemlock_rest.hemlock_rest.create
 This class is responsible for all API actions that involve creating
 someting.
@@ -238,7 +261,7 @@ returns the results of the action
 This class is responsible for all data query requests.
 .INDENT 7.0
 .TP
-.B POST(query)
+.B POST()
 POSTs the authentication for the query and returns the query respond
 specific to the user credentials provided.
 .INDENT 7.0
