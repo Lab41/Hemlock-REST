@@ -90,6 +90,33 @@ to something else.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="hemlock_rest.hemlock_rest.change">
+<em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">change</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.change" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is responsible for changing the server that a schedule runs on.</p>
+<dl class="method">
+<dt id="hemlock_rest.hemlock_rest.change.GET">
+<tt class="descname">GET</tt><big>(</big><em>first</em>, <em>second</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#change.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.change.GET" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the change action of the API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>first</strong> &#8211; the uuid of the schedule to change</li>
+<li><strong>second</strong> &#8211; the uuid of the server the schedule is being changed to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">returns the result of the action</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="hemlock_rest.hemlock_rest.create">
 <em class="property">class </em><tt class="descclassname">hemlock_rest.hemlock_rest.</tt><tt class="descname">create</tt><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is responsible for all API actions that involve creating
@@ -268,7 +295,7 @@ something specific to something else.</p>
 <dd><p>This class is responsible for all data query requests.</p>
 <dl class="method">
 <dt id="hemlock_rest.hemlock_rest.query.POST">
-<tt class="descname">POST</tt><big>(</big><em>query</em><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#query.POST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.query.POST" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">POST</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/hemlock_rest/hemlock_rest.html#query.POST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hemlock_rest.hemlock_rest.query.POST" title="Permalink to this definition">¶</a></dt>
 <dd><p>POSTs the authentication for the query and returns the query respond
 specific to the user credentials provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
