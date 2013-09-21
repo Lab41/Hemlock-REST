@@ -38,10 +38,13 @@ class Hemlock_REST():
             '/add/system/(.*)/tenant/(.*)', 'add',
             '/add/user/(.*)/role/(.*)', 'add',
             '/add/user/(.*)/tenant/(.*)', 'add',
+            '/change/schedule/(.*)/server/(.*)', 'change',
             '/create/role', 'create',
+            '/create/schedule_server', 'create',
             '/create/tenant', 'create',
             '/create/user', 'create',
             '/delete/role/(.*)', 'delete',
+            '/delete/schedule_server/(.*)', 'delete',
             '/delete/schedule/(.*)', 'delete',
             '/delete/tenant/(.*)', 'delete',
             '/delete/user/(.*)', 'delete',
@@ -49,6 +52,7 @@ class Hemlock_REST():
             '/deregister/remote-system/(.*)', 'deregister',
             '/get/client/(.*)', 'get',
             '/get/role/(.*)', 'get',
+            '/get/schedule_server/(.*)', 'get',
             '/get/schedule/(.*)', 'get',
             '/get/system/(.*)', 'get',
             '/get/tenant/(.*)', 'get',
@@ -56,6 +60,7 @@ class Hemlock_REST():
             '/list/all', 'list1',
             '/list/clients', 'list1',
             '/list/roles', 'list1',
+            '/list/schedule_servers', 'list1',
             '/list/schedules', 'list1',
             '/list/systems', 'list1',
             '/list/tenants', 'list1',
@@ -71,7 +76,7 @@ class Hemlock_REST():
             '/list/user/roles/(.*)', 'list2',
             '/list/user/tenants/(.*)', 'list2',
             '/purge/client/(.*)', 'delete',
-            '/query/data/(.*)', 'query',
+            '/query', 'query',
             '/run/client/(.*)/(.*)', 'run',
             '/register/local-system', 'register',
             '/register/remote-system', 'register',
@@ -106,17 +111,20 @@ class query:
     """
     This class is responsible for all data query requests.
     """
-    def POST(self, query):
+    def POST(self):
         """
         POSTs the authentication for the query and returns the query respond
         specific to the user credentials provided.
 
         :return: returns the results of the query
         """
-        # !! TODO
         data = web.data()
         data = ast.literal_eval(data)
-        return query
+        cmd = "hemlock query-data --user "+data['user']+" --query "+data['query']
+        child = pexpect.spawn(cmd)
+        child.expect('Password:')
+        child.sendline(data['password'])
+        return child.read()
 
 class fields:
     """
@@ -160,6 +168,22 @@ class add:
             cmd = "hemlock user-add-tenant --uuid "+first+" --tenant_id "+second
         return os.popen(cmd).read()
 
+class change:
+    """
+    This class is responsible for changing the server that a schedule runs on.
+    """
+    def GET(self, first, second):
+        """
+        Performs the change action of the API.
+
+        :param first: the uuid of the schedule to change
+        :param second: the uuid of the server the schedule is being changed to
+        :return: returns the result of the action
+        """
+        if "server" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-change-server --uuid "+first+" --schedule_server_id "+second
+        return os.popen(cmd).read()
+
 class create:
     """
     This class is responsible for all API actions that involve creating
@@ -175,6 +199,9 @@ class create:
         data = ast.literal_eval(data)
         if "role" in web.ctx['fullpath']:
             cmd = "hemlock role-create --name "+data['name']
+            return os.popen(cmd).read()
+        elif "schedule_server" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-server-create --name "+data['name']
             return os.popen(cmd).read()
         elif "tenant" in web.ctx['fullpath']:
             cmd = "hemlock tenant-create --name "+data['name']
@@ -210,6 +237,8 @@ class delete:
         """
         if "role" in web.ctx['fullpath']:
             cmd = "hemlock role-delete --uuid "+uuid
+        elif "schedule_server" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-server-delete --uuid "+uuid
         elif "system" in web.ctx['fullpath']:
             cmd = "hemlock system-delete --uuid "+uuid
         elif "user" in web.ctx['fullpath']:
@@ -253,6 +282,8 @@ class get:
         """
         if "role" in web.ctx['fullpath']:
             cmd = "hemlock role-get --uuid "+uuid
+        elif "schedule_server" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-server-get --uuid "+uuid
         elif "system" in web.ctx['fullpath']:
             cmd = "hemlock system-get --uuid "+uuid
         elif "tenant" in web.ctx['fullpath']:
@@ -278,7 +309,9 @@ class list1:
         """
         if "roles" in web.ctx['fullpath']:
             cmd = "hemlock role-list"
-        if "systems" in web.ctx['fullpath']:
+        elif "schedule_server" in web.ctx['fullpath']:
+            cmd = "hemlock schedule-server-list"
+        elif "systems" in web.ctx['fullpath']:
             cmd = "hemlock system-list"
         elif "tenants" in web.ctx['fullpath']:
             cmd = "hemlock tenant-list"
