@@ -118,6 +118,8 @@ class query:
 
         :return: returns the results of the query
         """
+        data = web.data()
+        data = ast.literal_eval(data)
         cmd = "hemlock query-data --user "+data['user']+" --query "+data['query']
         child = pexpect.spawn(cmd)
         child.expect('Password:')
