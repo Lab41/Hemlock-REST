@@ -1,4 +1,10 @@
 ```
+'/add/client/(.*)/schedule/(.*)'
+```
+```
+'/add/schedule/(.*)/client/(.*)'
+```
+```
 '/add/system/(.*)/tenant/(.*)'
      example usage:
                    curl http://server.fqdn:9001/add/system/59822f6b-4646-4dd8-9be9-038c2988375a/tenant/aa317893-6df2-4af6-88a5-3f395dfb0786
@@ -34,6 +40,11 @@
                    +-----------+--------------------------------------+
                    Took 2.99998903275 seconds to complete.
 
+```
+```
+'/change/schedule/(.*)/server/(.*)'
+```
+```
 '/create/role'
      example usage:
                    curl -i -H "Content-Type: application/json" -X POST -d '{"name": "role1"}' http://server.fqdn:9001/create/role
@@ -44,6 +55,9 @@
                    |   uuid   | cdf10182-b0e0-4f3c-a47a-ba09a005eb5a |
                    | created  |         2013-06-10 22:51:21          |
                    +----------+--------------------------------------+
+```
+```
+'/create/schedule_server'
 ```
 ```
 '/create/tenant'
@@ -82,6 +96,12 @@
                    Took 0.154651165009 seconds to complete.
 ```
 ```
+'/delete/schedule_server/(.*)'
+```
+```
+'/delete/schedule/(.*)'
+```
+```
 '/delete/tenant/(.*)'
      example usage:
                    curl http://server.fqdn:9001/delete/tenant/c6565168-4a8c-439a-ba4e-b4557189d456
@@ -106,6 +126,9 @@
                    Took 0.154651165009 seconds to complete.
 ```
 ```
+'/get/client/(.*)'
+```
+```
 '/get/role/(.*)'
      example usage:
                    curl http://server.fqdn:9001/get/role/f6df614c-4f5f-4498-8905-57069813e78e
@@ -118,6 +141,12 @@
                    | created  |         2013-06-10 21:53:27          |
                    +----------+--------------------------------------+
                    Took 0.0146381855011 seconds to complete.
+```
+```
+'/get/schedule_server/(.*)'
+```
+```
+'/get/schedule/(.*)'
 ```
 ```
 '/get/system/(.*)'
@@ -276,6 +305,9 @@
                    Took 0.0146169662476 seconds to complete.
 ```
 ```
+'/list/clients'
+```
+```
 '/list/roles'
      example usage:
                    curl http://server.fqdn:9001/list/roles (no results)
@@ -293,6 +325,12 @@
                    | role2 | 4c2d02ce-3832-4baa-9eb6-30526f99d98c |
                    +-------+--------------------------------------+
                    Took 0.0146169662476 seconds to complete.
+```
+```
+'/list/schedule_server'
+```
+```
+'/list/schedules'
 ```
 ```
 '/list/systems'
@@ -352,6 +390,12 @@
                    Took 0.0138659477234 seconds to complete.
 ```
 ```
+'/list/client/schedules/(.*)'
+```
+```
+'/list/client/systems/(.*)'
+```
+```
 '/list/role/users/(.*)'
      example usage:
                    curl http://server.fqdn:9001/list/role/users/cdf10182-b0e0-4f3c-a47a-ba09a005eb5a (no results)
@@ -371,6 +415,12 @@
                    | afbd7a79-74a1-4692-9c00-c31f4dd81a9f |
                    +--------------------------------------+
                    Took 0.0118811130524 seconds to complete.
+```
+```
+'/list/schedule/clients/(.*)'
+```
+```
+'/list/system/clients/(.*)'
 ```
 ```
 '/list/system/tenants/(.*)'
@@ -470,6 +520,15 @@
                    Took 0.0118811130524 seconds to complete.
 ```
 ```
+'/purge/client/(.*)'
+```
+```
+'/query'
+```
+```
+'/run/client/(.*)/(.*)'
+```
+```
 '/register/local-system'
      example usage:
                    curl -i -H "Content-Type: application/json" -X POST -d '{"name" :"system2", "data_type" :"text", "description" :"description1", "tenant_id" :"afbd7a79-74a1-4692-9c00-c31f4dd81a9f", "hostname" :"hostname1", "endpoint" :"http://hemlock.uri/", "poc_name":"name1","poc_email" :"poc@email.com"}' http://server.fqdn:9001/register/local-system
@@ -513,6 +572,12 @@
                    Took 12.7739210129 seconds to complete.
 ```
 ```
+'/remove/client/(.*)/schedule/(.*)'
+```
+```
+'/remove/schedule/(.*)/client/(.*)'
+```
+```
 '/remove/system/(.*)/tenant/(.*)'
      example usage:
                    curl http://server.fqdn:9001/remove/system/c6565168-4a8c-439a-ba4e-b4557189d456/tenant/860caa68-d11f-4f58-9cf4-7ead839ef7fe
@@ -529,6 +594,15 @@
      example usage:
                    curl http://server.fqdn:9001/remove/user/c6565168-4a8c-439a-ba4e-b4557189d456/tenant/860caa68-d11f-4f58-9cf4-7ead839ef7fe
                    Took 0.154651165009 seconds to complete.
+```
+```
+'/schedule/client'
+```
+```
+'/store/client'
+```
+```
+'/store/hemlock-server'
 ```
 ```
 bad urls will return 'not found'
