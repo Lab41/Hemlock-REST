@@ -1,3 +1,8 @@
+### 0.1.4 (2013-09-23)
+
+- finished up query-data
+- added API calls for schedule-server
+
 ### 0.1.3 (2013-09-16)
 
 - added additions to API, including query-data (incomplete)
