@@ -120,6 +120,7 @@ class query:
         """
         data = web.data()
         data = ast.literal_eval(data)
+        # !! TODO add no_couchbase flag
         cmd = "hemlock query-data --user "+data['user']+" --query "+data['query']
         child = pexpect.spawn(cmd)
         child.expect('Password:')
@@ -210,6 +211,7 @@ class create:
             cmd = "hemlock client-schedule --name "+data['name']+" --minute "+data['minute']+" --hour "+data['hour']+" --day_of_month "+data['day_of_month']+" --month "+data['month']+" --day_of_week "+data['day_of_week']+" --client_id "+data['client_id']
             return os.popen(cmd).read()
         elif "client" in web.ctx['fullpath']:
+            # !! TODO add no_coucnhase flag
             cmd = "hemlock client-store --name "+data['name']+" --type "+data['type']+" --system_id "+data['system_id']+" --credential_file "+data['credential_file']
             return os.popen(cmd).read()
         elif "hemlock-server" in web.ctx['fullpath']:
@@ -407,6 +409,7 @@ class run:
     This class is responsible for performing a run action of the API.
     """
     def GET(self, first, second):
+        # !! TODO add no_coucnhase flag
         # !! TODO this needs to be updated and tested
         """
         Performs the run action of the API.
