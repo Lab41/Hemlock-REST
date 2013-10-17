@@ -32,6 +32,7 @@ class Hemlock_REST():
     """
     def __init__(self, port=8080, host="0.0.0.0"):
         # !! TODO check for environment variables for hemlock.py
+        # !! TODO needs to be able to use no_couchbase flag
         urls = (
             '/add/client/(.*)/schedule/(.*)', 'add',
             '/add/schedule/(.*)/client/(.*)', 'add',
