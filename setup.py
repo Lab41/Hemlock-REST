@@ -25,7 +25,7 @@ class MyInstall(install):
 
 setup(
     name='hemlock-rest',
-    version='0.1.4',
+    version='0.1.5',
     author=u'Charlie Lewis',
     author_email='charliel@lab41.org',
     description='Hemlock is a way of providing a common data access layer. This is a RESTful server for Hemlock.',
