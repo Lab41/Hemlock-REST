@@ -1,3 +1,11 @@
+### 0.1.6 (2013-10-21)
+
+- sync with hemlock
+
+### 0.1.5 (2013-10-17)
+
+- sync with hemlock
+
 ### 0.1.4 (2013-09-23)
 
 - finished up query-data
