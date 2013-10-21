@@ -4,7 +4,7 @@
 
 ### 0.1.5 (2013-10-17)
 
-- sync with hemlock
+- keep in sync with Hemlock
 
 ### 0.1.4 (2013-09-23)
 
