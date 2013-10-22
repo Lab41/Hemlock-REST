@@ -78,7 +78,6 @@ class Hemlock_REST():
             '/list/user/tenants/(.*)', 'list2',
             '/purge/client/(.*)', 'delete',
             '/query', 'query',
-            '/run/client/(.*)/(.*)', 'run',
             '/register/local-system', 'register',
             '/register/remote-system', 'register',
             '/remove/client/(.*)/schedule/(.*)', 'remove',
@@ -86,7 +85,9 @@ class Hemlock_REST():
             '/remove/system/(.*)/tenant/(.*)', 'remove',
             '/remove/user/(.*)/role/(.*)', 'remove',
             '/remove/user/(.*)/tenant/(.*)', 'remove',
+            '/run/client/(.*)/(.*)', 'run',
             '/schedule/client', 'create',
+            '/start/scheduler/(.*)', 'start',
             '/store/client', 'create',
             '/store/hemlock-server', 'create',
             '/favicon.ico','favicon'
@@ -107,6 +108,19 @@ class favicon:
         f = open("static/favicon.ico", 'rb')
         web.header("Content-Type","image/x-icon")
         return f.read()
+
+class start:
+    """
+    This class is responsible for starting the scheduler.
+    """
+    def POST(self):
+        """
+        POSTs the server id that will be running the scheduler.
+
+        :return: returns the status of starting the scheduler
+        """
+        # !! TODO
+        return 
 
 class query:
     """
@@ -138,6 +152,7 @@ class fields:
 
         :return: returns the fields in all schemas stored in Hemlock
         """
+        # !! TODO placeholder
         true = True
         false = False
         null = None
