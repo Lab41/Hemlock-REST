@@ -69,4 +69,4 @@ class TestClass:
         """
         error = self.process_add_client_schedule()
         for err in error:
-            assert err = 0
+            assert err == 0
