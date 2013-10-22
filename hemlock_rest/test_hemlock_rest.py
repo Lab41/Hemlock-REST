@@ -14,3 +14,52 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+"""
+Test module for hemlock_rest.py
+
+Created on 22 October 2013
+@author: Charlie Lewis
+"""
+
+import hemlock_rest
+
+class TestClass:
+    """
+    Test class for hemlock_rest.py
+    """
+    def process_add_client_schedule(self):
+        """
+        Tests /add/client/(.*)/schedule/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_add_schedule_client(self):
+        """
+        Tests /add/schedule/(.*)/client/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_add_system_tenant(self):
+        """
+        Tests /add/system/(.*)/tenant/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_favicon(self):
+        """
+        Tests /favicon.ico
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
