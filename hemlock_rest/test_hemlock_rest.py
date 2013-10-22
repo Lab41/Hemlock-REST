@@ -21,6 +21,7 @@ Created on 22 October 2013
 @author: Charlie Lewis
 """
 
+import os
 import hemlock_rest
 
 class TestClass:
@@ -68,6 +69,14 @@ class TestClass:
         """
         error = []
         return error
+
+    def test_start_rest_server(self):
+        """
+        Starts the hemlock_rest server for testing purposes
+        """
+
+        cmd = "hemlock-rest &"
+        os.popen(cmd).read()
 
     def test_process_add_client_schedule(self):
         """
