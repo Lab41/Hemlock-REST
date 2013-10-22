@@ -63,3 +63,10 @@ class TestClass:
         error = []
         return error
 
+    def test_process_add_client_schedule(self):
+        """
+        Calls the test function for the add_client_schedule action.
+        """
+        error = self.process_add_client_schedule()
+        for err in error:
+            assert err = 0
