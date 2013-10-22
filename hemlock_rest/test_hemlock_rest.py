@@ -33,6 +33,10 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    spin up a webserver once, then use that to call the various tests
+        #    this should not be called in this function, but is just a reminder
+        a = hemlock_rest.Hemlock_REST()
         error = []
         return error
 
