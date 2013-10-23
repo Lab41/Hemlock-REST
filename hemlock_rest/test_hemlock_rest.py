@@ -21,8 +21,8 @@ Created on 22 October 2013
 @author: Charlie Lewis
 """
 
-import os
 import hemlock_rest
+import os
 
 class TestClass:
     """
@@ -61,6 +61,42 @@ class TestClass:
         error = []
         return error
 
+    def process_add_user_role(self):
+        """
+        Tests /add/user/(.*)/role/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_add_user_tenant(self):
+        """
+        Tests /add/user/(.*)/tenant/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_change_schedule_server(self):
+        """
+        Tests /change/schedule/(.*)/server/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_create_role(self):
+        """
+        Tests /create/role
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
     def process_favicon(self):
         """
         Tests /favicon.ico
@@ -83,5 +119,61 @@ class TestClass:
         Calls the test function for the add_client_schedule action.
         """
         error = self.process_add_client_schedule()
+        for err in error:
+            assert err == 0
+
+    def test_process_add_schedule_client(self):
+        """
+        Calls the test function for the add_schedule_client action.
+        """
+        error = self.process_add_schedule_client()
+        for err in error:
+            assert err == 0
+
+    def test_process_add_system_tenant(self):
+        """
+        Calls the test function for the add_system_tenant action.
+        """
+        error = self.process_add_system_tenant()
+        for err in error:
+            assert err == 0
+
+    def test_process_add_user_role(self):
+        """
+        Calls the test function for the add_user_role action.
+        """
+        error = self.process_add_user_role()
+        for err in error:
+            assert err == 0
+
+    def test_process_add_user_tenant(self):
+        """
+        Calls the test function for the add_user_tenant action.
+        """
+        error = self.process_add_user_tenant()
+        for err in error:
+            assert err == 0
+
+    def test_process_change_schedule_server(self):
+        """
+        Calls the test function for the change_schedule_server action.
+        """
+        error = self.process_change_schedule_server()
+        for err in error:
+            assert err == 0
+
+    def test_process_create_role(self):
+        """
+        Calls the test function for the create_role action.
+        """
+        error = self.process_create_role()
+        for err in error:
+            assert err == 0
+
+    def test_process_favicon(self):
+        """
+        Calls the test function for the favicon action.
+        """
+        error = self.process_favicon()
         for err in error:
             assert err == 0

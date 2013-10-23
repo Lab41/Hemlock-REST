@@ -113,9 +113,9 @@ class start:
     """
     This class is responsible for starting the scheduler.
     """
-    def POST(self):
+    def GET(self):
         """
-        POSTs the server id that will be running the scheduler.
+        Starts the schedule server on the server id specified.
 
         :return: returns the status of starting the scheduler
         """
