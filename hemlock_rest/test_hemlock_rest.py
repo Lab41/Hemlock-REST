@@ -97,6 +97,33 @@ class TestClass:
         error = []
         return error
 
+    def process_create_schedule_server(self):
+        """
+        Tests /create/schedule_server
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_create_tenant(self):
+        """
+        Tests /create/tenant
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_create_user(self):
+        """
+        Tests /create/user
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
     def process_favicon(self):
         """
         Tests /favicon.ico
@@ -167,6 +194,30 @@ class TestClass:
         Calls the test function for the create_role action.
         """
         error = self.process_create_role()
+        for err in error:
+            assert err == 0
+
+    def test_process_create_schedule_server(self):
+        """
+        Calls the test function for the create_schedule_server action.
+        """
+        error = self.process_create_schedule_server()
+        for err in error:
+            assert err == 0
+
+    def test_process_create_tenant(self):
+        """
+        Calls the test function for the create_tenant action.
+        """
+        error = self.process_create_tenant()
+        for err in error:
+            assert err == 0
+
+    def test_process_create_user(self):
+        """
+        Calls the test function for the create_user action.
+        """
+        error = self.process_create_user()
         for err in error:
             assert err == 0
 
