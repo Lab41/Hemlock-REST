@@ -448,6 +448,96 @@ class TestClass:
         error = []
         return error
 
+    def process_remove_client_schedule(self):
+        """
+        Tests /remove/client/(.*)/schedule/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_remove_schedule_client(self):
+        """
+        Tests /remove/schedule/(.*)/client/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_remove_system_tenant(self):
+        """
+        Tests /remove/system/(.*)/tenant/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_remove_user_role(self):
+        """
+        Tests /remove/user/(.*)/role/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_remove_user_tenant(self):
+        """
+        Tests /remove/user/(.*)/tenant/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_run_client(self):
+        """
+        Tests /run/client/(.*)/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_schedule_client(self):
+        """
+        Tests /schedule/client
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_start_scheduler(self):
+        """
+        Tests /start/scheduler/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_store_client(self):
+        """
+        Tests /store/client
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_store_hemlock_server(self):
+        """
+        Tests /store/hemlock-server
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
     def process_favicon(self):
         """
         Tests /favicon.ico
@@ -582,6 +672,334 @@ class TestClass:
         Calls the test function for the delete_user action.
         """
         error = self.process_delete_user()
+        for err in error:
+            assert err == 0
+
+    def test_process_deregister_local_system(self):
+        """
+        Calls the test function for the deregister_local_system action.
+        """
+        error = self.process_deregister_local_system()
+        for err in error:
+            assert err == 0
+
+    def test_process_deregister_remote_system(self):
+        """
+        Calls the test function for the deregister_remote_system action.
+        """
+        error = self.process_deregister_remote_system()
+        for err in error:
+            assert err == 0
+
+    def test_process_get_client(self):
+        """
+        Calls the test function for the get_client action.
+        """
+        error = self.process_get_client()
+        for err in error:
+            assert err == 0
+
+    def test_process_get_role(self):
+        """
+        Calls the test function for the get_role action.
+        """
+        error = self.process_get_role()
+        for err in error:
+            assert err == 0
+
+    def test_process_get_schedule_server(self):
+        """
+        Calls the test function for the get_schedule_server action.
+        """
+        error = self.process_get_schedule_server()
+        for err in error:
+            assert err == 0
+
+    def test_process_get_schedule(self):
+        """
+        Calls the test function for the get_schedule action.
+        """
+        error = self.process_get_schedule()
+        for err in error:
+            assert err == 0
+
+    def test_process_get_system(self):
+        """
+        Calls the test function for the get_system action.
+        """
+        error = self.process_get_system()
+        for err in error:
+            assert err == 0
+
+    def test_process_get_tenant(self):
+        """
+        Calls the test function for the get_tenant action.
+        """
+        error = self.process_get_tenant()
+        for err in error:
+            assert err == 0
+
+    def test_process_get_user(self):
+        """
+        Calls the test function for the get_user action.
+        """
+        error = self.process_get_user()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_all(self):
+        """
+        Calls the test function for the list_all action.
+        """
+        error = self.process_list_all()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_clients(self):
+        """
+        Calls the test function for the list_clients action.
+        """
+        error = self.process_list_clients()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_roles(self):
+        """
+        Calls the test function for the list_roles action.
+        """
+        error = self.process_list_roles()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_schedule_servers(self):
+        """
+        Calls the test function for the list_schedule_servers action.
+        """
+        error = self.process_list_schedule_servers()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_schedules(self):
+        """
+        Calls the test function for the list_schedules action.
+        """
+        error = self.process_list_schedules()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_systems(self):
+        """
+        Calls the test function for the list_systems action.
+        """
+        error = self.process_list_systems()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_tenants(self):
+        """
+        Calls the test function for the list_tenants action.
+        """
+        error = self.process_list_tenants()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_users(self):
+        """
+        Calls the test function for the list_users action.
+        """
+        error = self.process_list_users()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_client_schedules(self):
+        """
+        Calls the test function for the list_client_schedules action.
+        """
+        error = self.process_list_client_schedules()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_client_systems(self):
+        """
+        Calls the test function for the list_client_systems action.
+        """
+        error = self.process_list_client_systems()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_role_users(self):
+        """
+        Calls the test function for the list_role_users action.
+        """
+        error = self.process_list_role_users()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_schedule_clients(self):
+        """
+        Calls the test function for the list_schedule_clients action.
+        """
+        error = self.process_list_schedule_clients()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_system_clients(self):
+        """
+        Calls the test function for the list_system_clients action.
+        """
+        error = self.process_list_system_clients()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_system_tenants(self):
+        """
+        Calls the test function for the list_system_tenants action.
+        """
+        error = self.process_list_system_tenants()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_tenant_systems(self):
+        """
+        Calls the test function for the list_tenant_systems action.
+        """
+        error = self.process_list_tenant_systems()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_tenant_users(self):
+        """
+        Calls the test function for the list_tenant_users action.
+        """
+        error = self.process_list_tenant_users()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_user_roles(self):
+        """
+        Calls the test function for the list_user_roles action.
+        """
+        error = self.process_list_user_roles()
+        for err in error:
+            assert err == 0
+
+    def test_process_list_user_tenants(self):
+        """
+        Calls the test function for the list_user_tenants action.
+        """
+        error = self.process_list_user_tenants()
+        for err in error:
+            assert err == 0
+
+    def test_process_purge_client(self):
+        """
+        Calls the test function for the purge_client action.
+        """
+        error = self.process_purge_client()
+        for err in error:
+            assert err == 0
+
+    def test_process_query(self):
+        """
+        Calls the test function for the query action.
+        """
+        error = self.process_query()
+        for err in error:
+            assert err == 0
+
+    def test_process_register_local_system(self):
+        """
+        Calls the test function for the register_local_system action.
+        """
+        error = self.process_register_local_system()
+        for err in error:
+            assert err == 0
+
+    def test_process_register_remote_system(self):
+        """
+        Calls the test function for the register_remote_system action.
+        """
+        error = self.process_register_remote_system()
+        for err in error:
+            assert err == 0
+
+    def test_process_remove_client_schedule(self):
+        """
+        Calls the test function for the remove_client_schedule action.
+        """
+        error = self.process_remove_client_schedule()
+        for err in error:
+            assert err == 0
+
+    def test_process_remove_schedule_client(self):
+        """
+        Calls the test function for the remove_schedule_client action.
+        """
+        error = self.process_remove_schedule_client()
+        for err in error:
+            assert err == 0
+
+    def test_process_remove_system_tenant(self):
+        """
+        Calls the test function for the remove_system_tenant action.
+        """
+        error = self.process_remove_system_tenant()
+        for err in error:
+            assert err == 0
+
+    def test_process_remove_user_role(self):
+        """
+        Calls the test function for the remove_user_role action.
+        """
+        error = self.process_remove_user_role()
+        for err in error:
+            assert err == 0
+
+    def test_process_remove_user_tenant(self):
+        """
+        Calls the test function for the remove_user_tenant action.
+        """
+        error = self.process_remove_user_tenant()
+        for err in error:
+            assert err == 0
+
+    def test_process_run_client(self):
+        """
+        Calls the test function for the run_client action.
+        """
+        error = self.process_run_client()
+        for err in error:
+            assert err == 0
+
+    def test_process_schedule_client(self):
+        """
+        Calls the test function for the schedule_client action.
+        """
+        error = self.process_schedule_client()
+        for err in error:
+            assert err == 0
+
+    def test_process_start_scheduler(self):
+        """
+        Calls the test function for the start_scheduler action.
+        """
+        error = self.process_start_scheduler()
+        for err in error:
+            assert err == 0
+
+    def test_process_store_client(self):
+        """
+        Calls the test function for the store_client action.
+        """
+        error = self.process_store_client()
+        for err in error:
+            assert err == 0
+
+    def test_process_store_hemlock_server(self):
+        """
+        Calls the test function for the store_hemlock_server action.
+        """
+        error = self.process_store_hemlock_server()
         for err in error:
             assert err == 0
 
