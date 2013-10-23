@@ -76,7 +76,7 @@ class TestClass:
         """
 
         cmd = "hemlock-rest &"
-        os.popen(cmd).read()
+        os.system(cmd)
 
     def test_process_add_client_schedule(self):
         """
