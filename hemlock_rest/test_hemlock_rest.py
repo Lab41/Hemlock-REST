@@ -169,6 +169,285 @@ class TestClass:
         error = []
         return error
 
+    def process_deregister_local_system(self):
+        """
+        Tests /deregister/local-system/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_deregister_remote_system(self):
+        """
+        Tests /deregister/remote-system/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_get_client(self):
+        """
+        Tests /get/client/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_get_role(self):
+        """
+        Tests /get/role/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_get_schedule_server(self):
+        """
+        Tests /get/schedule_server/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_get_schedule(self):
+        """
+        Tests /get/schedule/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_get_system(self):
+        """
+        Tests /get/system/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_get_tenant(self):
+        """
+        Tests /get/tenant/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_get_user(self):
+        """
+        Tests /get/user/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_all(self):
+        """
+        Tests /list/all
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_clients(self):
+        """
+        Tests /list/clients
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_roles(self):
+        """
+        Tests /list/roles
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_schedule_servers(self):
+        """
+        Tests /list/schedule_servers
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_schedules(self):
+        """
+        Tests /list/schedules
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_systems(self):
+        """
+        Tests /list/systems
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_tenants(self):
+        """
+        Tests /list/tenants
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_users(self):
+        """
+        Tests /list/users
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_client_schedules(self):
+        """
+        Tests /list/client/schedules/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_client_systems(self):
+        """
+        Tests /list/client/systems/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_role_users(self):
+        """
+        Tests /list/role/users/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_schedule_clients(self):
+        """
+        Tests /list/schedule/clients/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_system_clients(self):
+        """
+        Tests /list/system/clients/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_system_tenants(self):
+        """
+        Tests /list/system/tenants/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_tenant_systems(self):
+        """
+        Tests /list/tenant/systems/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_tenant_users(self):
+        """
+        Tests /list/tenant/users/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_user_roles(self):
+        """
+        Tests /list/user/roles/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_list_user_tenants(self):
+        """
+        Tests /list/user/tenants/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_purge_client(self):
+        """
+        Tests /purge/client/(.*)
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_query(self):
+        """
+        Tests /query
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_register_local_system(self):
+        """
+        Tests /register/local-system/
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_register_remote_system(self):
+        """
+        Tests /register/remote-system/
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
     def process_favicon(self):
         """
         Tests /favicon.ico
