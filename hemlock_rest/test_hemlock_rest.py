@@ -258,7 +258,7 @@ class TestClass:
 
         :return: returns any errors
         """
-        cmd = shlex.split("http://localhost:8080/list/all")
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/all")
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
