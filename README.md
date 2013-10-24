@@ -56,3 +56,7 @@ Contributing
 ============
 
 What to contribute?  Awesome!  Issue a pull request or see more details [here](https://github.com/Lab41/Hemlock-REST/blob/master/CONTRIBUTING.md).
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Lab41/hemlock-rest/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
