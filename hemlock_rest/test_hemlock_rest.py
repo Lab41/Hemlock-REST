@@ -23,6 +23,8 @@ Created on 22 October 2013
 
 import hemlock_rest
 import os
+import shlex
+import subprocess
 
 class TestClass:
     """
@@ -256,8 +258,13 @@ class TestClass:
 
         :return: returns any errors
         """
+        cmd = shlex.split("http://localhost:8080/list/all")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_clients(self):
         """
@@ -751,7 +758,7 @@ class TestClass:
         """
         Calls the test function for the list_all action.
         """
-        error = self.process_list_all()
+        error, out = self.process_list_all()
         for err in error:
             assert err == 0
 
