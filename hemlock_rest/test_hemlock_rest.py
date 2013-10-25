@@ -36,12 +36,6 @@ class TestClass:
 
         :return: returns any errors
         """
-        # !! TODO
-        #    spin up a webserver once, then use that to call the various tests
-        #    this should not be called in this function, but is just a reminder
-
-        # going to have to  rethink how this is called for using with travis
-        #a = hemlock_rest.Hemlock_REST()
         error = []
         return error
 
@@ -249,8 +243,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a user first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/get/user/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_all(self):
         """
@@ -855,7 +856,7 @@ class TestClass:
         """
         Calls the test function for the get_user action.
         """
-        error = self.process_get_user()
+        error, out = self.process_get_user()
         for err in error:
             assert err == 0
 
