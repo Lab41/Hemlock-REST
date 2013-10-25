@@ -272,8 +272,13 @@ class TestClass:
 
         :return: returns any errors
         """
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/clients")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_roles(self):
         """
@@ -281,8 +286,13 @@ class TestClass:
 
         :return: returns any errors
         """
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/roles")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_schedule_servers(self):
         """
@@ -290,8 +300,13 @@ class TestClass:
 
         :return: returns any errors
         """
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/schedule_servers")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_schedules(self):
         """
@@ -299,8 +314,13 @@ class TestClass:
 
         :return: returns any errors
         """
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/schedules")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_systems(self):
         """
@@ -308,8 +328,13 @@ class TestClass:
 
         :return: returns any errors
         """
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/systems")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_tenants(self):
         """
@@ -317,8 +342,13 @@ class TestClass:
 
         :return: returns any errors
         """
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/tenants")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_users(self):
         """
@@ -326,8 +356,13 @@ class TestClass:
 
         :return: returns any errors
         """
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/users")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_client_schedules(self):
         """
@@ -335,8 +370,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a client
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/client/schedules/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_client_systems(self):
         """
@@ -344,8 +386,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a client
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/client/systems/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_role_users(self):
         """
@@ -353,8 +402,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a role
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/role/users/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_schedule_clients(self):
         """
@@ -362,8 +418,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a schedule
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/schedule/clients/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_system_clients(self):
         """
@@ -371,8 +434,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a system
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/system/clients/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_system_tenants(self):
         """
@@ -380,8 +450,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a system
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/system/tenants/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_tenant_systems(self):
         """
@@ -389,8 +466,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a tenant
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/tenant/systems/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_tenant_users(self):
         """
@@ -398,8 +482,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a tenant
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/tenant/users/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_user_roles(self):
         """
@@ -407,8 +498,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a user
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/user/roles/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_list_user_tenants(self):
         """
@@ -416,8 +514,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a user
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/list/user/tenants/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_purge_client(self):
         """
@@ -766,7 +871,7 @@ class TestClass:
         """
         Calls the test function for the list_clients action.
         """
-        error = self.process_list_clients()
+        error, out = self.process_list_clients()
         for err in error:
             assert err == 0
 
@@ -774,7 +879,7 @@ class TestClass:
         """
         Calls the test function for the list_roles action.
         """
-        error = self.process_list_roles()
+        error, out = self.process_list_roles()
         for err in error:
             assert err == 0
 
@@ -782,7 +887,7 @@ class TestClass:
         """
         Calls the test function for the list_schedule_servers action.
         """
-        error = self.process_list_schedule_servers()
+        error, out = self.process_list_schedule_servers()
         for err in error:
             assert err == 0
 
@@ -790,7 +895,7 @@ class TestClass:
         """
         Calls the test function for the list_schedules action.
         """
-        error = self.process_list_schedules()
+        error, out = self.process_list_schedules()
         for err in error:
             assert err == 0
 
@@ -798,7 +903,7 @@ class TestClass:
         """
         Calls the test function for the list_systems action.
         """
-        error = self.process_list_systems()
+        error, out = self.process_list_systems()
         for err in error:
             assert err == 0
 
@@ -806,7 +911,7 @@ class TestClass:
         """
         Calls the test function for the list_tenants action.
         """
-        error = self.process_list_tenants()
+        error, out = self.process_list_tenants()
         for err in error:
             assert err == 0
 
@@ -814,7 +919,7 @@ class TestClass:
         """
         Calls the test function for the list_users action.
         """
-        error = self.process_list_users()
+        error, out = self.process_list_users()
         for err in error:
             assert err == 0
 
@@ -822,7 +927,7 @@ class TestClass:
         """
         Calls the test function for the list_client_schedules action.
         """
-        error = self.process_list_client_schedules()
+        error, out = self.process_list_client_schedules()
         for err in error:
             assert err == 0
 
@@ -830,7 +935,7 @@ class TestClass:
         """
         Calls the test function for the list_client_systems action.
         """
-        error = self.process_list_client_systems()
+        error, out = self.process_list_client_systems()
         for err in error:
             assert err == 0
 
@@ -838,7 +943,7 @@ class TestClass:
         """
         Calls the test function for the list_role_users action.
         """
-        error = self.process_list_role_users()
+        error, out = self.process_list_role_users()
         for err in error:
             assert err == 0
 
@@ -846,7 +951,7 @@ class TestClass:
         """
         Calls the test function for the list_schedule_clients action.
         """
-        error = self.process_list_schedule_clients()
+        error, out = self.process_list_schedule_clients()
         for err in error:
             assert err == 0
 
@@ -854,7 +959,7 @@ class TestClass:
         """
         Calls the test function for the list_system_clients action.
         """
-        error = self.process_list_system_clients()
+        error, out = self.process_list_system_clients()
         for err in error:
             assert err == 0
 
@@ -862,7 +967,7 @@ class TestClass:
         """
         Calls the test function for the list_system_tenants action.
         """
-        error = self.process_list_system_tenants()
+        error, out = self.process_list_system_tenants()
         for err in error:
             assert err == 0
 
@@ -870,7 +975,7 @@ class TestClass:
         """
         Calls the test function for the list_tenant_systems action.
         """
-        error = self.process_list_tenant_systems()
+        error, out = self.process_list_tenant_systems()
         for err in error:
             assert err == 0
 
@@ -878,7 +983,7 @@ class TestClass:
         """
         Calls the test function for the list_tenant_users action.
         """
-        error = self.process_list_tenant_users()
+        error, out = self.process_list_tenant_users()
         for err in error:
             assert err == 0
 
@@ -886,7 +991,7 @@ class TestClass:
         """
         Calls the test function for the list_user_roles action.
         """
-        error = self.process_list_user_roles()
+        error, out = self.process_list_user_roles()
         for err in error:
             assert err == 0
 
@@ -894,7 +999,7 @@ class TestClass:
         """
         Calls the test function for the list_user_tenants action.
         """
-        error = self.process_list_user_tenants()
+        error, out = self.process_list_user_tenants()
         for err in error:
             assert err == 0
 
