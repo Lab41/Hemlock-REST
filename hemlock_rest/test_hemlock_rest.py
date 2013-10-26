@@ -30,6 +30,24 @@ class TestClass:
     """
     Test class for hemlock_rest.py
     """
+    def process_root(self):
+        """
+        Tests /
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
+    def process_version(self):
+        """
+        Tests /version
+
+        :return: returns any errors
+        """
+        error = []
+        return error
+
     def process_add_client_schedule(self):
         """
         Tests /add/client/(.*)/schedule/(.*)
@@ -667,6 +685,22 @@ class TestClass:
 
         cmd = "hemlock-rest &"
         os.system(cmd)
+
+    def test_process_root(self):
+        """
+        Calls the test function for the root action.
+        """
+        error = self.process_root()
+        for err in error:
+            assert err == 0
+
+    def test_process_version(self):
+        """
+        Calls the test function for the version action.
+        """
+        error = self.process_version()
+        for err in error:
+            assert err == 0
 
     def test_process_add_client_schedule(self):
         """

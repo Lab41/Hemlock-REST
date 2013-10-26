@@ -34,6 +34,7 @@ class Hemlock_REST():
         # !! TODO check for environment variables for hemlock.py
         # !! TODO needs to be able to use no_couchbase flag
         urls = (
+            '/', 'root',
             '/add/client/(.*)/schedule/(.*)', 'add',
             '/add/schedule/(.*)/client/(.*)', 'add',
             '/add/system/(.*)/tenant/(.*)', 'add',
@@ -90,10 +91,37 @@ class Hemlock_REST():
             '/start/scheduler/(.*)', 'start',
             '/store/client', 'create',
             '/store/hemlock-server', 'create',
+            '/version', 'version',
             '/favicon.ico','favicon'
         )
         app = web.application(urls, globals())
         web.httpserver.runsimple(app.wsgifunc(), (host, port))
+
+class root:
+    """
+    This class is resposible for giving information about the rest server.
+    """
+    def GET(self):
+        """
+        GETs the information about the rest server and renders it.
+
+        :return: returns the information
+        """
+        # !! TODO
+        return ""
+
+class version:
+    """
+    This class is resposible for returing the version of the rest server.
+    """
+    def GET(self):
+        """
+        GETs the version of the rest server and renders it.
+
+        :return: returns the version
+        """
+        # !! TODO
+        return ""
 
 class favicon:
     """
