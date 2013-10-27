@@ -207,8 +207,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a client first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/get/client/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_get_role(self):
         """
@@ -216,8 +223,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a role first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/get/role/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_get_schedule_server(self):
         """
@@ -225,8 +239,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a schedule_server first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/get/schedule_server/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_get_schedule(self):
         """
@@ -234,8 +255,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a schedule first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/get/schedule/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_get_system(self):
         """
@@ -243,8 +271,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a system first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/get/system/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_get_tenant(self):
         """
@@ -252,8 +287,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a tenant first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/get/tenant/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_get_user(self):
         """
@@ -842,7 +884,7 @@ class TestClass:
         """
         Calls the test function for the get_client action.
         """
-        error = self.process_get_client()
+        error, out = self.process_get_client()
         for err in error:
             assert err == 0
 
@@ -850,7 +892,7 @@ class TestClass:
         """
         Calls the test function for the get_role action.
         """
-        error = self.process_get_role()
+        error, out = self.process_get_role()
         for err in error:
             assert err == 0
 
@@ -858,7 +900,7 @@ class TestClass:
         """
         Calls the test function for the get_schedule_server action.
         """
-        error = self.process_get_schedule_server()
+        error, out = self.process_get_schedule_server()
         for err in error:
             assert err == 0
 
@@ -866,7 +908,7 @@ class TestClass:
         """
         Calls the test function for the get_schedule action.
         """
-        error = self.process_get_schedule()
+        error, out = self.process_get_schedule()
         for err in error:
             assert err == 0
 
@@ -874,7 +916,7 @@ class TestClass:
         """
         Calls the test function for the get_system action.
         """
-        error = self.process_get_system()
+        error, out = self.process_get_system()
         for err in error:
             assert err == 0
 
@@ -882,7 +924,7 @@ class TestClass:
         """
         Calls the test function for the get_tenant action.
         """
-        error = self.process_get_tenant()
+        error, out = self.process_get_tenant()
         for err in error:
             assert err == 0
 
