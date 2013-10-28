@@ -109,15 +109,13 @@ class TestClass:
         :return: returns any errors
         """
         # !! TODO
-        #cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/role")
-        #p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-        #out, err = p.communicate()
-        #error = []
-        #if err:
-        #    error.append(err)
-        #return error, out
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/role")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_create_schedule_server(self):
         """
@@ -126,15 +124,13 @@ class TestClass:
         :return: returns any errors
         """
         # !! TODO
-        #cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/schedule_server")
-        #p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-        #out, err = p.communicate()
-        #error = []
-        #if err:
-        #    error.append(err)
-        #return error, out
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/schedule_server")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_create_tenant(self):
         """
@@ -143,15 +139,13 @@ class TestClass:
         :return: returns any errors
         """
         # !! TODO
-        #cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/tenant")
-        #p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-        #out, err = p.communicate()
-        #error = []
-        #if err:
-        #    error.append(err)
-        #return error, out
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/tenant")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_create_user(self):
         """
@@ -160,15 +154,13 @@ class TestClass:
         :return: returns any errors
         """
         # !! TODO
-        #cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/user")
-        #p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-        #out, err = p.communicate()
-        #error = []
-        #if err:
-        #    error.append(err)
-        #return error, out
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/user")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_delete_role(self):
         """
@@ -877,7 +869,7 @@ class TestClass:
         """
         Calls the test function for the create_role action.
         """
-        error = self.process_create_role()
+        error, out = self.process_create_role()
         for err in error:
             assert err == 0
 
@@ -885,7 +877,7 @@ class TestClass:
         """
         Calls the test function for the create_schedule_server action.
         """
-        error = self.process_create_schedule_server()
+        error, out = self.process_create_schedule_server()
         for err in error:
             assert err == 0
 
@@ -893,7 +885,7 @@ class TestClass:
         """
         Calls the test function for the create_tenant action.
         """
-        error = self.process_create_tenant()
+        error, out = self.process_create_tenant()
         for err in error:
             assert err == 0
 
@@ -901,7 +893,7 @@ class TestClass:
         """
         Calls the test function for the create_user action.
         """
-        error = self.process_create_user()
+        error, out = self.process_create_user()
         for err in error:
             assert err == 0
 
