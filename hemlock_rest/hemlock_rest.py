@@ -27,7 +27,7 @@ import pexpect
 import urllib2
 import web
 
-class Hemlock_REST(object):
+class Hemlock_REST():
     """
     This class is responsible for initializing the urls and web server.
     """
