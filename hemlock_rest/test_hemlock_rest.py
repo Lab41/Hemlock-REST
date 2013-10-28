@@ -108,6 +108,14 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/role")
+        #p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        #out, err = p.communicate()
+        #error = []
+        #if err:
+        #    error.append(err)
+        #return error, out
         error = []
         return error
 
@@ -117,6 +125,14 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/schedule_server")
+        #p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        #out, err = p.communicate()
+        #error = []
+        #if err:
+        #    error.append(err)
+        #return error, out
         error = []
         return error
 
@@ -126,6 +142,14 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/tenant")
+        #p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        #out, err = p.communicate()
+        #error = []
+        #if err:
+        #    error.append(err)
+        #return error, out
         error = []
         return error
 
@@ -135,6 +159,14 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #cmd = shlex.split("/usr/bin/curl http://localhost:8080/create/user")
+        #p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        #out, err = p.communicate()
+        #error = []
+        #if err:
+        #    error.append(err)
+        #return error, out
         error = []
         return error
 
@@ -144,8 +176,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a role first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/delete/role/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_delete_schedule_server(self):
         """
@@ -153,8 +192,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a schedule_server first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/delete/schedule_server/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_delete_schedule(self):
         """
@@ -162,8 +208,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a schedule first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/delete/schedule/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_delete_tenant(self):
         """
@@ -171,8 +224,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a tenant first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/delete/tenant/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_delete_user(self):
         """
@@ -180,8 +240,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    create a user first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/delete/user/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_deregister_local_system(self):
         """
@@ -189,8 +256,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    register a local system first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/deregister/local-system/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_deregister_remote_system(self):
         """
@@ -198,8 +272,15 @@ class TestClass:
 
         :return: returns any errors
         """
+        # !! TODO
+        #    register a remote system first
+        cmd = shlex.split("/usr/bin/curl http://localhost:8080/deregister/remote-system/asdf")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        out, err = p.communicate()
         error = []
-        return error
+        if err:
+            error.append(err)
+        return error, out
 
     def process_get_client(self):
         """
@@ -828,7 +909,7 @@ class TestClass:
         """
         Calls the test function for the delete_role action.
         """
-        error = self.process_delete_role()
+        error, out = self.process_delete_role()
         for err in error:
             assert err == 0
 
@@ -836,7 +917,7 @@ class TestClass:
         """
         Calls the test function for the delete_schedule_server action.
         """
-        error = self.process_delete_schedule_server()
+        error, out = self.process_delete_schedule_server()
         for err in error:
             assert err == 0
 
@@ -844,7 +925,7 @@ class TestClass:
         """
         Calls the test function for the delete_schedule action.
         """
-        error = self.process_delete_schedule()
+        error, out = self.process_delete_schedule()
         for err in error:
             assert err == 0
 
@@ -852,7 +933,7 @@ class TestClass:
         """
         Calls the test function for the delete_tenant action.
         """
-        error = self.process_delete_tenant()
+        error, out = self.process_delete_tenant()
         for err in error:
             assert err == 0
 
@@ -860,7 +941,7 @@ class TestClass:
         """
         Calls the test function for the delete_user action.
         """
-        error = self.process_delete_user()
+        error, out = self.process_delete_user()
         for err in error:
             assert err == 0
 
@@ -868,7 +949,7 @@ class TestClass:
         """
         Calls the test function for the deregister_local_system action.
         """
-        error = self.process_deregister_local_system()
+        error, out = self.process_deregister_local_system()
         for err in error:
             assert err == 0
 
@@ -876,7 +957,7 @@ class TestClass:
         """
         Calls the test function for the deregister_remote_system action.
         """
-        error = self.process_deregister_remote_system()
+        error, out = self.process_deregister_remote_system()
         for err in error:
             assert err == 0
 
