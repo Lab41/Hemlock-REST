@@ -24,6 +24,7 @@ Created on 20 August 2013
 import ast
 import os
 import pexpect
+import urllib2
 import web
 
 class Hemlock_REST(object):
