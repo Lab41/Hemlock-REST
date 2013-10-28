@@ -27,13 +27,21 @@ import pexpect
 import urllib2
 import web
 
-class Hemlock_REST():
+class Hemlock_REST(object):
     """
     This class is responsible for initializing the urls and web server.
     """
+    def __new__(*args, **kw):
+        return object.__new__(*args, **kw)
+
     def __init__(self, port=8080, host="0.0.0.0"):
         # !! TODO check for environment variables for hemlock.py
         # !! TODO needs to be able to use no_couchbase flag
+        urls = self.setup() 
+        app = web.application(urls, globals())
+        web.httpserver.runsimple(app.wsgifunc(), (host, port))
+
+    def setup(self):
         urls = (
             '/', 'root',
             '/add/client/(.*)/schedule/(.*)', 'add',
@@ -95,9 +103,7 @@ class Hemlock_REST():
             '/version', 'version',
             '/favicon.ico','favicon'
         )
-        app = web.application(urls, globals())
-        web.httpserver.runsimple(app.wsgifunc(), (host, port))
-
+        return urls
 class root:
     """
     This class is resposible for giving information about the rest server.
