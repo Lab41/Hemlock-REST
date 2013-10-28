@@ -185,9 +185,12 @@ class fields:
         true = True
         false = False
         null = None
-        mapping = urllib2.urlopen("http://localhost:9200/_mapping").read()
-        mapping = json.loads(mapping)
-        return sorted(mapping["hemlock"]["couchbaseDocument"]["properties"]["doc"]["properties"].keys())
+        try:
+            mapping = urllib2.urlopen("http://localhost:9200/_mapping").read()
+            mapping = json.loads(mapping)
+            return sorted(mapping["hemlock"]["couchbaseDocument"]["properties"]["doc"]["properties"].keys())
+        except:
+            return ""
 
 class add:
     """
