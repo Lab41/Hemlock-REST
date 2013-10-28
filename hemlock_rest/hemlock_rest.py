@@ -38,7 +38,7 @@ class Hemlock_REST(object):
     def __init__(self, port=8080, host="0.0.0.0"):
         # !! TODO check for environment variables for hemlock.py
         # !! TODO needs to be able to use no_couchbase flag
-        urls = self.setup() 
+        urls = self.setup()
         app = web.application(urls, globals())
         web.httpserver.runsimple(app.wsgifunc(), (host, port))
 
@@ -156,7 +156,7 @@ class start:
         :return: returns the status of starting the scheduler
         """
         # !! TODO
-        return 
+        return
 
 class query:
     """
@@ -169,14 +169,17 @@ class query:
 
         :return: returns the results of the query
         """
-        data = web.data()
-        data = ast.literal_eval(data)
-        # !! TODO add no_couchbase flag
-        cmd = "hemlock query-data --user "+data['user']+" --query "+data['query']
-        child = pexpect.spawn(cmd)
-        child.expect('Password:')
-        child.sendline(data['password'])
-        return child.read()
+        try:
+            data = web.data()
+            data = ast.literal_eval(data)
+            # !! TODO add no_couchbase flag
+            cmd = "hemlock query-data --user "+data['user']+" --query "+data['query']
+            child = pexpect.spawn(cmd)
+            child.expect('Password:')
+            child.sendline(data['password'])
+            return child.read()
+        except:
+            return ""
 
 class fields:
     """
@@ -259,10 +262,10 @@ class create:
 
         :return: returns the result of the action
         """
-        data = web.data()
-        data = ast.literal_eval(data)
         cmd = ""
         try:
+            data = web.data()
+            data = ast.literal_eval(data)
             if "role" in web.ctx['fullpath']:
                 cmd = "hemlock role-create --name "+data['name']
                 return os.popen(cmd).read()
@@ -458,10 +461,10 @@ class register:
 
         :return: returns the result of the action
         """
-        data = web.data()
-        data = ast.literal_eval(data)
         cmd = ""
         try:
+            data = web.data()
+            data = ast.literal_eval(data)
             if "local" in web.ctx['fullpath']:
                 cmd = "hemlock register-local-system --name "+data['name']+" --data_type "+data['data_type']+" --description "+data['description']+" --tenant_id "+data['tenant_id']+" --hostname "+data['hostname']+" --endpoint "+data['endpoint']+" --poc_name "+data['poc_name']+" --poc_email "+data['poc_email']
             elif "remote" in web.ctx['fullpath']:

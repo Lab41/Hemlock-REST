@@ -807,8 +807,7 @@ class TestClass():
         a = hemlock_rest.start()
         a.GET()
         a = hemlock_rest.query()
-        # !! TODO
-        #a.POST()
+        a.POST()
         a = hemlock_rest.fields()
         a.GET()
         a = hemlock_rest.add()
@@ -816,8 +815,7 @@ class TestClass():
         a = hemlock_rest.change()
         a.GET("first", "second")
         a = hemlock_rest.create()
-        # !! TODO
-        #a.POST()
+        a.POST()
         a = hemlock_rest.delete()
         a.GET("uuid")
         a = hemlock_rest.deregister()
@@ -829,8 +827,7 @@ class TestClass():
         a = hemlock_rest.list2()
         a.GET("uuid")
         a = hemlock_rest.register()
-        # !! TODO
-        #a.POST()
+        a.POST()
         a = hemlock_rest.remove()
         a.GET("first", "second")
         a = hemlock_rest.run()
