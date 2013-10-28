@@ -26,7 +26,13 @@ import os
 import pexpect
 import web
 
-class Hemlock_REST():
+class Hemlock_REST(object):
+    """
+    This class is here purely for testing purposes.
+    """
+    def __new__(*args, **kw):
+       return object.__new__(*args, **kw)
+
     """
     This class is responsible for initializing the urls and web server.
     """

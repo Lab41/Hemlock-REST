@@ -793,11 +793,16 @@ class TestClass:
         error = []
         return error
 
+    def test_instantiate(self):
+        """
+        Tests instantiate instance without starting web server
+        """
+        a = hemlock_rest.Hemlock_REST().__new__(object)
+
     def test_start_rest_server(self):
         """
         Starts the hemlock_rest server for testing purposes
         """
-
         cmd = "hemlock-rest &"
         os.system(cmd)
 
