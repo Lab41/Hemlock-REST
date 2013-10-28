@@ -26,10 +26,7 @@ import os
 import shlex
 import subprocess
 
-class TestClass:
-    """
-    Test class for hemlock_rest.py
-    """
+class TestClass():
     def process_root(self):
         """
         Tests /
@@ -795,9 +792,42 @@ class TestClass:
 
     def test_instantiate(self):
         """
-        Tests instantiate instance without starting web server
+        Tests instantiate instances of api functions
         """
-        a = hemlock_rest.Hemlock_REST().__new__(object)
+        a = hemlock_rest.root()
+        a.GET()
+        a = hemlock_rest.version()
+        a.GET()
+        a = hemlock_rest.favicon()
+        a.GET()
+        a = hemlock_rest.start()
+        a.GET()
+        a = hemlock_rest.query()
+        a.POST()
+        a = hemlock_rest.fields()
+        a.GET()
+        a = hemlock_rest.add()
+        a.GET()
+        a = hemlock_rest.change()
+        a.GET()
+        a = hemlock_rest.create()
+        a.POST()
+        a = hemlock_rest.delete()
+        a.GET()
+        a = hemlock_rest.deregister()
+        a.GET()
+        a = hemlock_rest.get()
+        a.GET()
+        a = hemlock_rest.list1()
+        a.GET()
+        a = hemlock_rest.list2()
+        a.GET()
+        a = hemlock_rest.register()
+        a.POST()
+        a = hemlock_rest.remove()
+        a.GET()
+        a = hemlock_rest.run()
+        a.GET()
 
     def test_start_rest_server(self):
         """
