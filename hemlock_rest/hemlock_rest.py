@@ -205,16 +205,20 @@ class add:
         :param second: the uuid of the second part of the action
         :return: returns the result of the action
         """
-        if "system" in web.ctx['fullpath']:
-            cmd = "hemlock system-add-tenant --uuid "+first+" --tenant_id "+second
-        elif "add/client" in web.ctx['fullpath']:
-            cmd = "hemlock client-add-schedule --uuid "+first+" --schedule_id "+second
-        elif "add/schedule" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-add-client --uuid "+first+" --client_id "+second
-        elif "role" in web.ctx['fullpath']:
-            cmd = "hemlock user-add-role --uuid "+first+" --role_id "+second
-        elif "user" in web.ctx['fullpath']:
-            cmd = "hemlock user-add-tenant --uuid "+first+" --tenant_id "+second
+        cmd = ""
+        try:
+            if "system" in web.ctx['fullpath']:
+                cmd = "hemlock system-add-tenant --uuid "+first+" --tenant_id "+second
+            elif "add/client" in web.ctx['fullpath']:
+                cmd = "hemlock client-add-schedule --uuid "+first+" --schedule_id "+second
+            elif "add/schedule" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-add-client --uuid "+first+" --client_id "+second
+            elif "role" in web.ctx['fullpath']:
+                cmd = "hemlock user-add-role --uuid "+first+" --role_id "+second
+            elif "user" in web.ctx['fullpath']:
+                cmd = "hemlock user-add-tenant --uuid "+first+" --tenant_id "+second
+        except:
+            print "failure"
         return os.popen(cmd).read()
 
 class change:
@@ -229,8 +233,12 @@ class change:
         :param second: the uuid of the server the schedule is being changed to
         :return: returns the result of the action
         """
-        if "server" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-change-server --uuid "+first+" --schedule_server_id "+second
+        cmd = ""
+        try:
+            if "server" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-change-server --uuid "+first+" --schedule_server_id "+second
+        except:
+            print "failure"
         return os.popen(cmd).read()
 
 class create:
@@ -246,31 +254,35 @@ class create:
         """
         data = web.data()
         data = ast.literal_eval(data)
-        if "role" in web.ctx['fullpath']:
-            cmd = "hemlock role-create --name "+data['name']
-            return os.popen(cmd).read()
-        elif "schedule_server" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-server-create --name "+data['name']
-            return os.popen(cmd).read()
-        elif "tenant" in web.ctx['fullpath']:
-            cmd = "hemlock tenant-create --name "+data['name']
-            return os.popen(cmd).read()
-        elif "schedule" in web.ctx['fullpath']:
-            cmd = "hemlock client-schedule --name "+data['name']+" --minute "+data['minute']+" --hour "+data['hour']+" --day_of_month "+data['day_of_month']+" --month "+data['month']+" --day_of_week "+data['day_of_week']+" --client_id "+data['client_id']
-            return os.popen(cmd).read()
-        elif "client" in web.ctx['fullpath']:
-            # !! TODO add no_coucnhase flag
-            cmd = "hemlock client-store --name "+data['name']+" --type "+data['type']+" --system_id "+data['system_id']+" --credential_file "+data['credential_file']
-            return os.popen(cmd).read()
-        elif "hemlock-server" in web.ctx['fullpath']:
-            cmd = "hemlock hemlock-server-store --credential_file "+data['credential_file']
-            return os.popen(cmd).read()
-        elif "user" in web.ctx['fullpath']:
-            cmd = "hemlock user-create --name "+data['name']+" --username "+data['username']+" --email "+data['email']+" --role_id "+data['role_id']+" --tenant_id "+data['tenant_id']
-            child = pexpect.spawn(cmd)
-            child.expect('Password:')
-            child.sendline(data['password'])
-            return child.read()
+        cmd = ""
+        try:
+            if "role" in web.ctx['fullpath']:
+                cmd = "hemlock role-create --name "+data['name']
+                return os.popen(cmd).read()
+            elif "schedule_server" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-server-create --name "+data['name']
+                return os.popen(cmd).read()
+            elif "tenant" in web.ctx['fullpath']:
+                cmd = "hemlock tenant-create --name "+data['name']
+                return os.popen(cmd).read()
+            elif "schedule" in web.ctx['fullpath']:
+                cmd = "hemlock client-schedule --name "+data['name']+" --minute "+data['minute']+" --hour "+data['hour']+" --day_of_month "+data['day_of_month']+" --month "+data['month']+" --day_of_week "+data['day_of_week']+" --client_id "+data['client_id']
+                return os.popen(cmd).read()
+            elif "client" in web.ctx['fullpath']:
+                # !! TODO add no_coucnhase flag
+                cmd = "hemlock client-store --name "+data['name']+" --type "+data['type']+" --system_id "+data['system_id']+" --credential_file "+data['credential_file']
+                return os.popen(cmd).read()
+            elif "hemlock-server" in web.ctx['fullpath']:
+                cmd = "hemlock hemlock-server-store --credential_file "+data['credential_file']
+                return os.popen(cmd).read()
+            elif "user" in web.ctx['fullpath']:
+                cmd = "hemlock user-create --name "+data['name']+" --username "+data['username']+" --email "+data['email']+" --role_id "+data['role_id']+" --tenant_id "+data['tenant_id']
+                child = pexpect.spawn(cmd)
+                child.expect('Password:')
+                child.sendline(data['password'])
+                return child.read()
+        except:
+            print "failure"
         return
 
 class delete:
@@ -285,20 +297,24 @@ class delete:
         :param uuid: the uuid of the item being deleted
         :return: returns the result of the action
         """
-        if "role" in web.ctx['fullpath']:
-            cmd = "hemlock role-delete --uuid "+uuid
-        elif "schedule_server" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-server-delete --uuid "+uuid
-        elif "system" in web.ctx['fullpath']:
-            cmd = "hemlock system-delete --uuid "+uuid
-        elif "user" in web.ctx['fullpath']:
-            cmd = "hemlock user-delete --uuid "+uuid
-        elif "tenant" in web.ctx['fullpath']:
-            cmd = "hemlock tenant-delete --uuid "+uuid
-        elif "schedule" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-delete --uuid "+uuid
-        elif "client" in web.ctx['fullpath']:
-            cmd = "hemlock client-purge --uuid "+uuid
+        cmd = ""
+        try:
+            if "role" in web.ctx['fullpath']:
+                cmd = "hemlock role-delete --uuid "+uuid
+            elif "schedule_server" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-server-delete --uuid "+uuid
+            elif "system" in web.ctx['fullpath']:
+                cmd = "hemlock system-delete --uuid "+uuid
+            elif "user" in web.ctx['fullpath']:
+                cmd = "hemlock user-delete --uuid "+uuid
+            elif "tenant" in web.ctx['fullpath']:
+                cmd = "hemlock tenant-delete --uuid "+uuid
+            elif "schedule" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-delete --uuid "+uuid
+            elif "client" in web.ctx['fullpath']:
+                cmd = "hemlock client-purge --uuid "+uuid
+        except:
+            print "failure"
         return os.popen(cmd).read()
 
 class deregister:
@@ -312,10 +328,14 @@ class deregister:
         :param uuid: the uuid of the system being deregistered
         :return: returns the result of the action
         """
-        if "local" in web.ctx['fullpath']:
-            cmd = "hemlock deregister-local-system --uuid "+uuid
-        elif "remote" in web.ctx['fullpath']:
-            cmd = "hemlock deregister-remote-system --uuid "+uuid
+        cmd = ""
+        try:
+            if "local" in web.ctx['fullpath']:
+                cmd = "hemlock deregister-local-system --uuid "+uuid
+            elif "remote" in web.ctx['fullpath']:
+                cmd = "hemlock deregister-remote-system --uuid "+uuid
+        except:
+            print "failure"
         return os.popen(cmd).read()
 
 class get:
@@ -330,20 +350,24 @@ class get:
         :param uuid: the uuid of the item to get
         :return: returns the result of the action
         """
-        if "role" in web.ctx['fullpath']:
-            cmd = "hemlock role-get --uuid "+uuid
-        elif "schedule_server" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-server-get --uuid "+uuid
-        elif "system" in web.ctx['fullpath']:
-            cmd = "hemlock system-get --uuid "+uuid
-        elif "tenant" in web.ctx['fullpath']:
-            cmd = "hemlock tenant-get --uuid "+uuid
-        elif "user" in web.ctx['fullpath']:
-            cmd = "hemlock user-get --uuid "+uuid
-        elif "client" in web.ctx['fullpath']:
-            cmd = "hemlock client-get --uuid "+uuid
-        elif "schedule" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-get --uuid "+uuid
+        cmd = ""
+        try:
+            if "role" in web.ctx['fullpath']:
+                cmd = "hemlock role-get --uuid "+uuid
+            elif "schedule_server" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-server-get --uuid "+uuid
+            elif "system" in web.ctx['fullpath']:
+                cmd = "hemlock system-get --uuid "+uuid
+            elif "tenant" in web.ctx['fullpath']:
+                cmd = "hemlock tenant-get --uuid "+uuid
+            elif "user" in web.ctx['fullpath']:
+                cmd = "hemlock user-get --uuid "+uuid
+            elif "client" in web.ctx['fullpath']:
+                cmd = "hemlock client-get --uuid "+uuid
+            elif "schedule" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-get --uuid "+uuid
+        except:
+            print "failure"
         return os.popen(cmd).read()
 
 class list1:
@@ -357,22 +381,26 @@ class list1:
 
         :returns: returns the results of the action
         """
-        if "roles" in web.ctx['fullpath']:
-            cmd = "hemlock role-list"
-        elif "schedule_server" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-server-list"
-        elif "systems" in web.ctx['fullpath']:
-            cmd = "hemlock system-list"
-        elif "tenants" in web.ctx['fullpath']:
-            cmd = "hemlock tenant-list"
-        elif "users" in web.ctx['fullpath']:
-            cmd = "hemlock user-list"
-        elif "clients" in web.ctx['fullpath']:
-            cmd = "hemlock client-list"
-        elif "schedules" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-list"
-        elif "all" in web.ctx['fullpath']:
-            cmd = "hemlock list-all"
+        cmd = ""
+        try:
+            if "roles" in web.ctx['fullpath']:
+                cmd = "hemlock role-list"
+            elif "schedule_server" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-server-list"
+            elif "systems" in web.ctx['fullpath']:
+                cmd = "hemlock system-list"
+            elif "tenants" in web.ctx['fullpath']:
+                cmd = "hemlock tenant-list"
+            elif "users" in web.ctx['fullpath']:
+                cmd = "hemlock user-list"
+            elif "clients" in web.ctx['fullpath']:
+                cmd = "hemlock client-list"
+            elif "schedules" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-list"
+            elif "all" in web.ctx['fullpath']:
+                cmd = "hemlock list-all"
+        except:
+            print "failure"
         return os.popen(cmd).read()
 
 class list2:
@@ -387,26 +415,30 @@ class list2:
         :param uuid: the uuid of the specific item to get a list relative to
         :return: returns the results of the action
         """
-        if "system" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
-            cmd = "hemlock system-tenants-list --uuid "+uuid
-        elif "tenant" in web.ctx['fullpath'] and "systems" in web.ctx['fullpath']:
-            cmd = "hemlock tenant-systems-list --uuid "+uuid
-        elif "tenant" in web.ctx['fullpath'] and "users" in web.ctx['fullpath']:
-            cmd = "hemlock tenant-users-list --uuid "+uuid
-        elif "user" in web.ctx['fullpath'] and "roles" in web.ctx['fullpath']:
-            cmd = "hemlock user-roles-list --uuid "+uuid
-        elif "role" in web.ctx['fullpath'] and "users" in web.ctx['fullpath']:
-            cmd = "hemlock role-users-list --uuid "+uuid
-        elif "user" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
-            cmd = "hemlock user-tenants-list --uuid "+uuid
-        elif "client" in web.ctx['fullpath'] and "schedules" in web.ctx['fullpath']:
-            cmd = "hemlock client-schedules-list --uuid "+uuid
-        elif "client" in web.ctx['fullpath'] and "systems" in web.ctx['fullpath']:
-            cmd = "hemlock client-systems-list --uuid "+uuid
-        elif "schedule" in web.ctx['fullpath'] and "clients" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-clients-list --uuid "+uuid
-        elif "system" in web.ctx['fullpath'] and "clients" in web.ctx['fullpath']:
-            cmd = "hemlock system-clients-list --uuid "+uuid
+        cmd = ""
+        try:
+            if "system" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
+                cmd = "hemlock system-tenants-list --uuid "+uuid
+            elif "tenant" in web.ctx['fullpath'] and "systems" in web.ctx['fullpath']:
+                cmd = "hemlock tenant-systems-list --uuid "+uuid
+            elif "tenant" in web.ctx['fullpath'] and "users" in web.ctx['fullpath']:
+                cmd = "hemlock tenant-users-list --uuid "+uuid
+            elif "user" in web.ctx['fullpath'] and "roles" in web.ctx['fullpath']:
+                cmd = "hemlock user-roles-list --uuid "+uuid
+            elif "role" in web.ctx['fullpath'] and "users" in web.ctx['fullpath']:
+                cmd = "hemlock role-users-list --uuid "+uuid
+            elif "user" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
+                cmd = "hemlock user-tenants-list --uuid "+uuid
+            elif "client" in web.ctx['fullpath'] and "schedules" in web.ctx['fullpath']:
+                cmd = "hemlock client-schedules-list --uuid "+uuid
+            elif "client" in web.ctx['fullpath'] and "systems" in web.ctx['fullpath']:
+                cmd = "hemlock client-systems-list --uuid "+uuid
+            elif "schedule" in web.ctx['fullpath'] and "clients" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-clients-list --uuid "+uuid
+            elif "system" in web.ctx['fullpath'] and "clients" in web.ctx['fullpath']:
+                cmd = "hemlock system-clients-list --uuid "+uuid
+        except:
+            print "failure"
         return os.popen(cmd).read()
 
 class register:
@@ -421,10 +453,14 @@ class register:
         """
         data = web.data()
         data = ast.literal_eval(data)
-        if "local" in web.ctx['fullpath']:
-            cmd = "hemlock register-local-system --name "+data['name']+" --data_type "+data['data_type']+" --description "+data['description']+" --tenant_id "+data['tenant_id']+" --hostname "+data['hostname']+" --endpoint "+data['endpoint']+" --poc_name "+data['poc_name']+" --poc_email "+data['poc_email']
-        elif "remote" in web.ctx['fullpath']:
-            cmd = "hemlock register-remote-system --name "+data['name']+" --data_type "+data['data_type']+" --description "+data['description']+" --tenant_id "+data['tenant_id']+" --hostname "+data['hostname']+" --port "+data['port']+" --remote_uri "+data['remote_uri']+" --poc_name "+data['poc_name']+" --poc_email "+data['poc_email']
+        cmd = ""
+        try:
+            if "local" in web.ctx['fullpath']:
+                cmd = "hemlock register-local-system --name "+data['name']+" --data_type "+data['data_type']+" --description "+data['description']+" --tenant_id "+data['tenant_id']+" --hostname "+data['hostname']+" --endpoint "+data['endpoint']+" --poc_name "+data['poc_name']+" --poc_email "+data['poc_email']
+            elif "remote" in web.ctx['fullpath']:
+                cmd = "hemlock register-remote-system --name "+data['name']+" --data_type "+data['data_type']+" --description "+data['description']+" --tenant_id "+data['tenant_id']+" --hostname "+data['hostname']+" --port "+data['port']+" --remote_uri "+data['remote_uri']+" --poc_name "+data['poc_name']+" --poc_email "+data['poc_email']
+        except:
+            print "failure"
         return os.popen(cmd).read()
 
 class remove:
@@ -440,16 +476,20 @@ class remove:
         :param second: the uuid of the second part of the action
         :return: returns the result of the action
         """
-        if "role" in web.ctx['fullpath']:
-            cmd = "hemlock user-remove-role --uuid "+first+" --role_id "+second
-        if "system" in web.ctx['fullpath']:
-            cmd = "hemlock system-remove-tenant --uuid "+first+" --tenant_id "+second
-        elif "user" in web.ctx['fullpath']:
-            cmd = "hemlock user-remove-tenant --uuid "+first+" --tenant_id "+second
-        elif "remove/client" in web.ctx['fullpath']:
-            cmd = "hemlock client-remove-schedule --uuid "+first+" --schedule_id "+second
-        elif "remove/schedule" in web.ctx['fullpath']:
-            cmd = "hemlock schedule-remove-client --uuid "+first+" --client_id "+second
+        cmd = ""
+        try:
+            if "role" in web.ctx['fullpath']:
+                cmd = "hemlock user-remove-role --uuid "+first+" --role_id "+second
+            if "system" in web.ctx['fullpath']:
+                cmd = "hemlock system-remove-tenant --uuid "+first+" --tenant_id "+second
+            elif "user" in web.ctx['fullpath']:
+                cmd = "hemlock user-remove-tenant --uuid "+first+" --tenant_id "+second
+            elif "remove/client" in web.ctx['fullpath']:
+                cmd = "hemlock client-remove-schedule --uuid "+first+" --schedule_id "+second
+            elif "remove/schedule" in web.ctx['fullpath']:
+                cmd = "hemlock schedule-remove-client --uuid "+first+" --client_id "+second
+        except:
+            print "failure"
         return os.popen(cmd).read()
 
 class run:
