@@ -27,9 +27,6 @@ import shlex
 import subprocess
 
 class TestClass():
-    def __init__(*args, **kw):
-        print "override hemlock_rest __init__"
-
     def process_root(self):
         """
         Tests /
@@ -797,7 +794,7 @@ class TestClass():
         """
         Tests instantiate instances of api functions
         """
-        a = hemlock_rest.Hemlock_REST().__new__()
+        a = hemlock_rest.Hemlock_REST().__new__(hemlock_rest.Hemlock_REST)
         a.setup()
         a = hemlock_rest.root()
         a.GET()

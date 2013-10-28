@@ -32,7 +32,8 @@ class Hemlock_REST(object):
     This class is responsible for initializing the urls and web server.
     """
     def __new__(*args, **kw):
-        return object.__new__(*args, **kw)
+        print "don't call __init__"
+        #return object.__new__(*args, **kw)
 
     def __init__(self, port=8080, host="0.0.0.0"):
         # !! TODO check for environment variables for hemlock.py
