@@ -24,6 +24,7 @@ Created on 20 August 2013
 import ast
 import os
 import pexpect
+import sys
 import urllib2
 import web
 
@@ -31,9 +32,13 @@ class Hemlock_REST(object):
     """
     This class is responsible for initializing the urls and web server.
     """
+    # !! TOOD
+    # need __new__ for tests, but fails to call __init__ when actually running
     def __new__(*args, **kw):
-        print "don't call __init__"
-        #return object.__new__(*args, **kw)
+        if hasattr(sys, '_called_from_test'):
+            print "don't call __init__"
+        else:
+            return object.__new__(*args, **kw)
 
     def __init__(self, port=8080, host="0.0.0.0"):
         # !! TODO check for environment variables for hemlock.py
