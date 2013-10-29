@@ -815,6 +815,14 @@ class TestClass():
         a = hemlock_rest.change()
         a.GET("first", "second")
         a = hemlock_rest.create()
+        a.fullpath = "role"
+        a.data = "{'name':'foo'}"
+        a.POST()
+        a.fullpath = "schedule_server"
+        a.data = "{'name':'foo'}"
+        a.POST()
+        a.fullpath = "tenant"
+        a.data = "{'name':'foo'}"
         a.POST()
         a = hemlock_rest.delete()
         a.GET("uuid")
