@@ -179,7 +179,7 @@ class query:
             cmd = "hemlock query-data --user "+self.data['user']+" --query "+self.data['query']
             child = pexpect.spawn(cmd)
             child.expect('Password:')
-            child.sendline(data['password'])
+            child.sendline(self.data['password'])
             return child.read()
         except:
             return ""
