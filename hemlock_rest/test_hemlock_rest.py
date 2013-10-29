@@ -910,8 +910,22 @@ class TestClass():
         a.fullpath = "clients system"
         a.GET("uuid")
         a = hemlock_rest.register()
+        a.fullpath = "local"
+        a.data = "{'name':'foo', 'data_type':'asdf', 'description':'asdf', 'tenant_id':'asdf', 'hostname':'asdf', 'endpoint':'asdf', 'poc_name':'asdf', 'poc_email':'asdf'}"
+        a.POST()
+        a.fullpath = "remote"
+        a.data = "{'name':'foo', 'data_type':'asdf', 'description':'asdf', 'tenant_id':'asdf', 'hostname':'asdf', 'port':'asdf', 'remote_uri':'asdf', 'poc_name':'asdf', 'poc_email':'asdf'}"
         a.POST()
         a = hemlock_rest.remove()
+        a.fullpath = "roles"
+        a.GET("first", "second")
+        a.fullpath = "system"
+        a.GET("first", "second")
+        a.fullpath = "user"
+        a.GET("first", "second")
+        a.fullpath = "remove/client"
+        a.GET("first", "second")
+        a.fullpath = "remove/schedule"
         a.GET("first", "second")
         a = hemlock_rest.run()
         a.GET("first", "second")
