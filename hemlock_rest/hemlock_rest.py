@@ -105,6 +105,7 @@ class Hemlock_REST(object):
             '/favicon.ico','favicon'
         )
         return urls
+
 class root:
     """
     This class is resposible for giving information about the rest server.
@@ -162,6 +163,9 @@ class query:
     """
     This class is responsible for all data query requests.
     """
+    def __init__(self):
+        self.data = web.data()
+
     def POST(self):
         """
         POSTs the authentication for the query and returns the query respond
@@ -170,10 +174,9 @@ class query:
         :return: returns the results of the query
         """
         try:
-            data = web.data()
-            data = ast.literal_eval(data)
+            self.data = ast.literal_eval(self.data)
             # !! TODO add no_couchbase flag
-            cmd = "hemlock query-data --user "+data['user']+" --query "+data['query']
+            cmd = "hemlock query-data --user "+self.data['user']+" --query "+self.data['query']
             child = pexpect.spawn(cmd)
             child.expect('Password:')
             child.sendline(data['password'])
@@ -207,6 +210,9 @@ class add:
     This class is responsible for all API actions that involve adding something
     to something else.
     """
+    def __init__(self):
+        self.fullpath = web.ctx['fullpath']
+
     def GET(self, first, second):
         """
         Performs the add actions of the API.
@@ -217,15 +223,15 @@ class add:
         """
         cmd = ""
         try:
-            if "system" in web.ctx['fullpath']:
+            if "system" in self.fullpath:
                 cmd = "hemlock system-add-tenant --uuid "+first+" --tenant_id "+second
-            elif "add/client" in web.ctx['fullpath']:
+            elif "add/client" in self.fullpath:
                 cmd = "hemlock client-add-schedule --uuid "+first+" --schedule_id "+second
-            elif "add/schedule" in web.ctx['fullpath']:
+            elif "add/schedule" in self.fullpath:
                 cmd = "hemlock schedule-add-client --uuid "+first+" --client_id "+second
-            elif "role" in web.ctx['fullpath']:
+            elif "role" in self.fullpath:
                 cmd = "hemlock user-add-role --uuid "+first+" --role_id "+second
-            elif "user" in web.ctx['fullpath']:
+            elif "user" in self.fullpath:
                 cmd = "hemlock user-add-tenant --uuid "+first+" --tenant_id "+second
         except:
             print "failure"
@@ -235,6 +241,9 @@ class change:
     """
     This class is responsible for changing the server that a schedule runs on.
     """
+    def __init__(self):
+        self.fullpath = web.ctx['fullpath']
+
     def GET(self, first, second):
         """
         Performs the change action of the API.
@@ -245,7 +254,7 @@ class change:
         """
         cmd = ""
         try:
-            if "server" in web.ctx['fullpath']:
+            if "server" in self.fullpath:
                 cmd = "hemlock schedule-change-server --uuid "+first+" --schedule_server_id "+second
         except:
             print "failure"
@@ -256,6 +265,10 @@ class create:
     This class is responsible for all API actions that involve creating
     someting.
     """
+    def __init__(self):
+        self.data = web.data()
+        self.fullpath = web.ctx['fullpath']
+
     def POST(self):
         """
         POSTs the create actions of the API.
@@ -264,32 +277,31 @@ class create:
         """
         cmd = ""
         try:
-            data = web.data()
-            data = ast.literal_eval(data)
-            if "role" in web.ctx['fullpath']:
-                cmd = "hemlock role-create --name "+data['name']
+            self.data = ast.literal_eval(self.data)
+            if "role" in self.fullpath:
+                cmd = "hemlock role-create --name "+self.data['name']
                 return os.popen(cmd).read()
-            elif "schedule_server" in web.ctx['fullpath']:
-                cmd = "hemlock schedule-server-create --name "+data['name']
+            elif "schedule_server" in self.fullpath:
+                cmd = "hemlock schedule-server-create --name "+self.data['name']
                 return os.popen(cmd).read()
-            elif "tenant" in web.ctx['fullpath']:
-                cmd = "hemlock tenant-create --name "+data['name']
+            elif "tenant" in self.fullpath:
+                cmd = "hemlock tenant-create --name "+self.data['name']
                 return os.popen(cmd).read()
-            elif "schedule" in web.ctx['fullpath']:
-                cmd = "hemlock client-schedule --name "+data['name']+" --minute "+data['minute']+" --hour "+data['hour']+" --day_of_month "+data['day_of_month']+" --month "+data['month']+" --day_of_week "+data['day_of_week']+" --client_id "+data['client_id']
+            elif "schedule" in self.fullpath:
+                cmd = "hemlock client-schedule --name "+self.data['name']+" --minute "+self.data['minute']+" --hour "+self.data['hour']+" --day_of_month "+self.data['day_of_month']+" --month "+self.data['month']+" --day_of_week "+self.data['day_of_week']+" --client_id "+self.data['client_id']
                 return os.popen(cmd).read()
-            elif "client" in web.ctx['fullpath']:
+            elif "client" in self.fullpath:
                 # !! TODO add no_coucnhase flag
-                cmd = "hemlock client-store --name "+data['name']+" --type "+data['type']+" --system_id "+data['system_id']+" --credential_file "+data['credential_file']
+                cmd = "hemlock client-store --name "+self.data['name']+" --type "+self.data['type']+" --system_id "+self.data['system_id']+" --credential_file "+self.data['credential_file']
                 return os.popen(cmd).read()
-            elif "hemlock-server" in web.ctx['fullpath']:
-                cmd = "hemlock hemlock-server-store --credential_file "+data['credential_file']
+            elif "hemlock-server" in self.fullpath:
+                cmd = "hemlock hemlock-server-store --credential_file "+self.data['credential_file']
                 return os.popen(cmd).read()
-            elif "user" in web.ctx['fullpath']:
-                cmd = "hemlock user-create --name "+data['name']+" --username "+data['username']+" --email "+data['email']+" --role_id "+data['role_id']+" --tenant_id "+data['tenant_id']
+            elif "user" in self.fullpath:
+                cmd = "hemlock user-create --name "+self.data['name']+" --username "+self.data['username']+" --email "+self.data['email']+" --role_id "+self.data['role_id']+" --tenant_id "+self.data['tenant_id']
                 child = pexpect.spawn(cmd)
                 child.expect('Password:')
-                child.sendline(data['password'])
+                child.sendline(self.data['password'])
                 return child.read()
         except:
             print "failure"
@@ -300,6 +312,9 @@ class delete:
     This class is responsible for all API actions that involve deleting
     something.
     """
+    def __init__(self):
+        self.fullpath = web.ctx['fullpath']
+
     def GET(self, uuid):
         """
         Performs the delete actions of the API.
@@ -309,19 +324,19 @@ class delete:
         """
         cmd = ""
         try:
-            if "role" in web.ctx['fullpath']:
+            if "role" in self.fullpath:
                 cmd = "hemlock role-delete --uuid "+uuid
-            elif "schedule_server" in web.ctx['fullpath']:
+            elif "schedule_server" in self.fullpath:
                 cmd = "hemlock schedule-server-delete --uuid "+uuid
-            elif "system" in web.ctx['fullpath']:
+            elif "system" in self.fullpath:
                 cmd = "hemlock system-delete --uuid "+uuid
-            elif "user" in web.ctx['fullpath']:
+            elif "user" in self.fullpath:
                 cmd = "hemlock user-delete --uuid "+uuid
-            elif "tenant" in web.ctx['fullpath']:
+            elif "tenant" in self.fullpath:
                 cmd = "hemlock tenant-delete --uuid "+uuid
-            elif "schedule" in web.ctx['fullpath']:
+            elif "schedule" in self.fullpath:
                 cmd = "hemlock schedule-delete --uuid "+uuid
-            elif "client" in web.ctx['fullpath']:
+            elif "client" in self.fullpath:
                 cmd = "hemlock client-purge --uuid "+uuid
         except:
             print "failure"
@@ -331,6 +346,9 @@ class deregister:
     """
     This class is responsible for deregistering systems.
     """
+    def __init__(self):
+        self.fullpath = web.ctx['fullpath']
+
     def GET(self, uuid):
         """
         Performs the deregister action of the API.
@@ -340,9 +358,9 @@ class deregister:
         """
         cmd = ""
         try:
-            if "local" in web.ctx['fullpath']:
+            if "local" in self.fullpath:
                 cmd = "hemlock deregister-local-system --uuid "+uuid
-            elif "remote" in web.ctx['fullpath']:
+            elif "remote" in self.fullpath:
                 cmd = "hemlock deregister-remote-system --uuid "+uuid
         except:
             print "failure"
@@ -353,6 +371,9 @@ class get:
     This class is responsible for all API actions that involve getting
     something.
     """
+    def __init__(self):
+        self.fullpath = web.ctx['fullpath']
+
     def GET(self, uuid):
         """
         Performs the get actions of the API.
@@ -362,19 +383,19 @@ class get:
         """
         cmd = ""
         try:
-            if "role" in web.ctx['fullpath']:
+            if "role" in self.fullpath:
                 cmd = "hemlock role-get --uuid "+uuid
-            elif "schedule_server" in web.ctx['fullpath']:
+            elif "schedule_server" in self.fullpath:
                 cmd = "hemlock schedule-server-get --uuid "+uuid
-            elif "system" in web.ctx['fullpath']:
+            elif "system" in self.fullpath:
                 cmd = "hemlock system-get --uuid "+uuid
-            elif "tenant" in web.ctx['fullpath']:
+            elif "tenant" in self.fullpath:
                 cmd = "hemlock tenant-get --uuid "+uuid
-            elif "user" in web.ctx['fullpath']:
+            elif "user" in self.fullpath:
                 cmd = "hemlock user-get --uuid "+uuid
-            elif "client" in web.ctx['fullpath']:
+            elif "client" in self.fullpath:
                 cmd = "hemlock client-get --uuid "+uuid
-            elif "schedule" in web.ctx['fullpath']:
+            elif "schedule" in self.fullpath:
                 cmd = "hemlock schedule-get --uuid "+uuid
         except:
             print "failure"
@@ -385,6 +406,9 @@ class list1:
     This class is responsible for all API actions that involve listing
     a type of something.
     """
+    def __init__(self):
+        self.fullpath = web.ctx['fullpath']
+
     def GET(self):
         """
         Performs the list actions of the API for a given type.
@@ -393,21 +417,21 @@ class list1:
         """
         cmd = ""
         try:
-            if "roles" in web.ctx['fullpath']:
+            if "roles" in self.fullpath:
                 cmd = "hemlock role-list"
-            elif "schedule_server" in web.ctx['fullpath']:
+            elif "schedule_server" in self.fullpath:
                 cmd = "hemlock schedule-server-list"
-            elif "systems" in web.ctx['fullpath']:
+            elif "systems" in self.fullpath:
                 cmd = "hemlock system-list"
-            elif "tenants" in web.ctx['fullpath']:
+            elif "tenants" in self.fullpath:
                 cmd = "hemlock tenant-list"
-            elif "users" in web.ctx['fullpath']:
+            elif "users" in self.fullpath:
                 cmd = "hemlock user-list"
-            elif "clients" in web.ctx['fullpath']:
+            elif "clients" in self.fullpath:
                 cmd = "hemlock client-list"
-            elif "schedules" in web.ctx['fullpath']:
+            elif "schedules" in self.fullpath:
                 cmd = "hemlock schedule-list"
-            elif "all" in web.ctx['fullpath']:
+            elif "all" in self.fullpath:
                 cmd = "hemlock list-all"
         except:
             print "failure"
@@ -418,6 +442,9 @@ class list2:
     This class is responsible for all API actions that involve listing
     something specific to something else.
     """
+    def __init__(self):
+        self.fullpath = web.ctx['fullpath']
+
     def GET(self, uuid):
         """
         Performs the list actions of the API specific to a given something.
@@ -427,25 +454,25 @@ class list2:
         """
         cmd = ""
         try:
-            if "system" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
+            if "system" in self.fullpath and "tenants" in self.fullpath:
                 cmd = "hemlock system-tenants-list --uuid "+uuid
-            elif "tenant" in web.ctx['fullpath'] and "systems" in web.ctx['fullpath']:
+            elif "tenant" in self.fullpath and "systems" in self.fullpath:
                 cmd = "hemlock tenant-systems-list --uuid "+uuid
-            elif "tenant" in web.ctx['fullpath'] and "users" in web.ctx['fullpath']:
+            elif "tenant" in self.fullpath and "users" in self.fullpath:
                 cmd = "hemlock tenant-users-list --uuid "+uuid
-            elif "user" in web.ctx['fullpath'] and "roles" in web.ctx['fullpath']:
+            elif "user" in self.fullpath and "roles" in self.fullpath:
                 cmd = "hemlock user-roles-list --uuid "+uuid
-            elif "role" in web.ctx['fullpath'] and "users" in web.ctx['fullpath']:
+            elif "role" in self.fullpath and "users" in self.fullpath:
                 cmd = "hemlock role-users-list --uuid "+uuid
-            elif "user" in web.ctx['fullpath'] and "tenants" in web.ctx['fullpath']:
+            elif "user" in self.fullpath and "tenants" in self.fullpath:
                 cmd = "hemlock user-tenants-list --uuid "+uuid
-            elif "client" in web.ctx['fullpath'] and "schedules" in web.ctx['fullpath']:
+            elif "client" in self.fullpath and "schedules" in self.fullpath:
                 cmd = "hemlock client-schedules-list --uuid "+uuid
-            elif "client" in web.ctx['fullpath'] and "systems" in web.ctx['fullpath']:
+            elif "client" in self.fullpath and "systems" in self.fullpath:
                 cmd = "hemlock client-systems-list --uuid "+uuid
-            elif "schedule" in web.ctx['fullpath'] and "clients" in web.ctx['fullpath']:
+            elif "schedule" in self.fullpath and "clients" in self.fullpath:
                 cmd = "hemlock schedule-clients-list --uuid "+uuid
-            elif "system" in web.ctx['fullpath'] and "clients" in web.ctx['fullpath']:
+            elif "system" in self.fullpath and "clients" in self.fullpath:
                 cmd = "hemlock system-clients-list --uuid "+uuid
         except:
             print "failure"
@@ -455,6 +482,10 @@ class register:
     """
     This class is responsble for registering a system.
     """
+    def __init__(self):
+        self.data = web.data()
+        self.fullpath = web.ctx['fullpath']
+
     def POST(self):
         """
         Performs the register action of the API.
@@ -463,12 +494,11 @@ class register:
         """
         cmd = ""
         try:
-            data = web.data()
-            data = ast.literal_eval(data)
-            if "local" in web.ctx['fullpath']:
-                cmd = "hemlock register-local-system --name "+data['name']+" --data_type "+data['data_type']+" --description "+data['description']+" --tenant_id "+data['tenant_id']+" --hostname "+data['hostname']+" --endpoint "+data['endpoint']+" --poc_name "+data['poc_name']+" --poc_email "+data['poc_email']
-            elif "remote" in web.ctx['fullpath']:
-                cmd = "hemlock register-remote-system --name "+data['name']+" --data_type "+data['data_type']+" --description "+data['description']+" --tenant_id "+data['tenant_id']+" --hostname "+data['hostname']+" --port "+data['port']+" --remote_uri "+data['remote_uri']+" --poc_name "+data['poc_name']+" --poc_email "+data['poc_email']
+            self.data = ast.literal_eval(self.data)
+            if "local" in self.fullpath:
+                cmd = "hemlock register-local-system --name "+self.data['name']+" --data_type "+self.data['data_type']+" --description "+self.data['description']+" --tenant_id "+self.data['tenant_id']+" --hostname "+self.data['hostname']+" --endpoint "+self.data['endpoint']+" --poc_name "+self.data['poc_name']+" --poc_email "+self.data['poc_email']
+            elif "remote" in self.fullpath:
+                cmd = "hemlock register-remote-system --name "+self.data['name']+" --data_type "+self.data['data_type']+" --description "+self.data['description']+" --tenant_id "+self.data['tenant_id']+" --hostname "+self.data['hostname']+" --port "+self.data['port']+" --remote_uri "+self.data['remote_uri']+" --poc_name "+self.data['poc_name']+" --poc_email "+self.data['poc_email']
         except:
             print "failure"
         return os.popen(cmd).read()
@@ -478,6 +508,9 @@ class remove:
     This class is responsible for all API actions that involve removing
     something.
     """
+    def __init__(self):
+        self.fullpath = web.ctx['fullpath']
+
     def GET(self, first, second):
         """
         Performs the remove actions of the API.
@@ -488,15 +521,15 @@ class remove:
         """
         cmd = ""
         try:
-            if "role" in web.ctx['fullpath']:
+            if "role" in self.fullpath:
                 cmd = "hemlock user-remove-role --uuid "+first+" --role_id "+second
-            if "system" in web.ctx['fullpath']:
+            if "system" in self.fullpath:
                 cmd = "hemlock system-remove-tenant --uuid "+first+" --tenant_id "+second
-            elif "user" in web.ctx['fullpath']:
+            elif "user" in self.fullpath:
                 cmd = "hemlock user-remove-tenant --uuid "+first+" --tenant_id "+second
-            elif "remove/client" in web.ctx['fullpath']:
+            elif "remove/client" in self.fullpath:
                 cmd = "hemlock client-remove-schedule --uuid "+first+" --schedule_id "+second
-            elif "remove/schedule" in web.ctx['fullpath']:
+            elif "remove/schedule" in self.fullpath:
                 cmd = "hemlock schedule-remove-client --uuid "+first+" --client_id "+second
         except:
             print "failure"
