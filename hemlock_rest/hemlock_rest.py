@@ -164,7 +164,10 @@ class query:
     This class is responsible for all data query requests.
     """
     def __init__(self):
-        self.data = web.data()
+        try:
+            self.data = web.data()
+        except:
+            print "failure"
 
     def POST(self):
         """
