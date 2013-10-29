@@ -164,6 +164,7 @@ class query:
     This class is responsible for all data query requests.
     """
     def __init__(self):
+        self.data = ""
         try:
             self.data = web.data()
         except:
@@ -214,7 +215,11 @@ class add:
     to something else.
     """
     def __init__(self):
-        self.fullpath = web.ctx['fullpath']
+        self.fullpath = ""
+        try:
+            self.fullpath = web.ctx['fullpath']
+        except:
+            print "failure"
 
     def GET(self, first, second):
         """
@@ -245,7 +250,11 @@ class change:
     This class is responsible for changing the server that a schedule runs on.
     """
     def __init__(self):
-        self.fullpath = web.ctx['fullpath']
+        self.fullpath = ""
+        try:
+            self.fullpath = web.ctx['fullpath']
+        except:
+            print "failure"
 
     def GET(self, first, second):
         """
@@ -269,8 +278,13 @@ class create:
     someting.
     """
     def __init__(self):
-        self.data = web.data()
-        self.fullpath = web.ctx['fullpath']
+        self.data = ""
+        self.fullpath = ""
+        try:
+            self.data = web.data()
+            self.fullpath = web.ctx['fullpath']
+        except:
+            print "failure"
 
     def POST(self):
         """
@@ -316,7 +330,11 @@ class delete:
     something.
     """
     def __init__(self):
-        self.fullpath = web.ctx['fullpath']
+        self.fullpath = ""
+        try:
+            self.fullpath = web.ctx['fullpath']
+        except:
+            print "failure"
 
     def GET(self, uuid):
         """
@@ -350,7 +368,11 @@ class deregister:
     This class is responsible for deregistering systems.
     """
     def __init__(self):
-        self.fullpath = web.ctx['fullpath']
+        self.fullpath = ""
+        try:
+            self.fullpath = web.ctx['fullpath']
+        except:
+            print "failure"
 
     def GET(self, uuid):
         """
@@ -375,7 +397,11 @@ class get:
     something.
     """
     def __init__(self):
-        self.fullpath = web.ctx['fullpath']
+        self.fullpath = ""
+        try:
+            self.fullpath = web.ctx['fullpath']
+        except:
+            print "failure"
 
     def GET(self, uuid):
         """
@@ -410,7 +436,11 @@ class list1:
     a type of something.
     """
     def __init__(self):
-        self.fullpath = web.ctx['fullpath']
+        self.fullpath = ""
+        try:
+            self.fullpath = web.ctx['fullpath']
+        except:
+            print "failure"
 
     def GET(self):
         """
@@ -446,7 +476,11 @@ class list2:
     something specific to something else.
     """
     def __init__(self):
-        self.fullpath = web.ctx['fullpath']
+        self.fullpath = ""
+        try:
+            self.fullpath = web.ctx['fullpath']
+        except:
+            print "failure"
 
     def GET(self, uuid):
         """
@@ -486,8 +520,13 @@ class register:
     This class is responsble for registering a system.
     """
     def __init__(self):
-        self.data = web.data()
-        self.fullpath = web.ctx['fullpath']
+        self.data = ""
+        self.fullpath = ""
+        try:
+            self.data = web.data()
+            self.fullpath = web.ctx['fullpath']
+        except:
+            print "failure"
 
     def POST(self):
         """
@@ -512,7 +551,11 @@ class remove:
     something.
     """
     def __init__(self):
-        self.fullpath = web.ctx['fullpath']
+        self.fullpath = ""
+        try:
+            self.fullpath = web.ctx['fullpath']
+        except:
+            print "failure"
 
     def GET(self, first, second):
         """
