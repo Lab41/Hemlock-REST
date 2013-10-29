@@ -837,14 +837,77 @@ class TestClass():
         a.data = "{'name':'foo', 'username':'asdf', 'email':'asdf', 'role_id':'asdf', 'tenant_id':'asdf'}"
         a.POST()
         a = hemlock_rest.delete()
+        a.fullpath = "role"
+        a.GET("uuid")
+        a.fullpath = "schedule_server"
+        a.GET("uuid")
+        a.fullpath = "system"
+        a.GET("uuid")
+        a.fullpath = "user"
+        a.GET("uuid")
+        a.fullpath = "tenant"
+        a.GET("uuid")
+        a.fullpath = "schedule"
+        a.GET("uuid")
+        a.fullpath = "client"
         a.GET("uuid")
         a = hemlock_rest.deregister()
+        a.fullpath = "local"
+        a.GET("uuid")
+        a.fullpath = "remote"
         a.GET("uuid")
         a = hemlock_rest.get()
+        a.fullpath = "role"
+        a.GET("uuid")
+        a.fullpath = "schedule_server"
+        a.GET("uuid")
+        a.fullpath = "system"
+        a.GET("uuid")
+        a.fullpath = "tenant"
+        a.GET("uuid")
+        a.fullpath = "user"
+        a.GET("uuid")
+        a.fullpath = "client"
+        a.GET("uuid")
+        a.fullpath = "schedule"
         a.GET("uuid")
         a = hemlock_rest.list1()
+        a.fullpath = "roles"
+        a.GET()
+        a.fullpath = "schedule_server"
+        a.GET()
+        a.fullpath = "systems"
+        a.GET()
+        a.fullpath = "tenants"
+        a.GET()
+        a.fullpath = "users"
+        a.GET()
+        a.fullpath = "clients"
+        a.GET()
+        a.fullpath = "schedules"
+        a.GET()
+        a.fullpath = "all"
         a.GET()
         a = hemlock_rest.list2()
+        a.fullpath = "system tenants"
+        a.GET("uuid")
+        a.fullpath = "systems tenant"
+        a.GET("uuid")
+        a.fullpath = "users tenant"
+        a.GET("uuid")
+        a.fullpath = "user tenants"
+        a.GET("uuid")
+        a.fullpath = "user roles"
+        a.GET("uuid")
+        a.fullpath = "users role"
+        a.GET("uuid")
+        a.fullpath = "client schedules"
+        a.GET("uuid")
+        a.fullpath = "clients schedule"
+        a.GET("uuid")
+        a.fullpath = "client systems"
+        a.GET("uuid")
+        a.fullpath = "clients system"
         a.GET("uuid")
         a = hemlock_rest.register()
         a.POST()
