@@ -824,6 +824,18 @@ class TestClass():
         a.fullpath = "tenant"
         a.data = "{'name':'foo'}"
         a.POST()
+        a.fullpath = "schedule"
+        a.data = "{'name':'foo', 'minute':'1', 'hour':'1', 'day_of_month':'1', 'month':'1', 'day_of_week':'1', 'client_id':'asdf'}"
+        a.POST()
+        a.fullpath = "client"
+        a.data = "{'name':'foo', 'type':'asdf', 'system_id':'asdf', 'credential_file':'asdf'}"
+        a.POST()
+        a.fullpath = "hemlock-server"
+        a.data = "{'credential_file':'foo'}"
+        a.POST()
+        a.fullpath = "user"
+        a.data = "{'name':'foo', 'username':'asdf', 'email':'asdf', 'role_id':'asdf', 'tenant_id':'asdf'}"
+        a.POST()
         a = hemlock_rest.delete()
         a.GET("uuid")
         a = hemlock_rest.deregister()
