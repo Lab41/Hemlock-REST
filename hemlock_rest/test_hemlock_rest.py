@@ -110,8 +110,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_create_schedule_server(self):
@@ -125,8 +124,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_create_tenant(self):
@@ -140,8 +138,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_create_user(self):
@@ -155,8 +152,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_delete_role(self):
@@ -171,8 +167,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_delete_schedule_server(self):
@@ -187,8 +182,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_delete_schedule(self):
@@ -203,8 +197,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_delete_tenant(self):
@@ -219,8 +212,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_delete_user(self):
@@ -235,8 +227,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_deregister_local_system(self):
@@ -251,8 +242,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_deregister_remote_system(self):
@@ -267,8 +257,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_get_client(self):
@@ -283,8 +272,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_get_role(self):
@@ -299,8 +287,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_get_schedule_server(self):
@@ -315,8 +302,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_get_schedule(self):
@@ -331,8 +317,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_get_system(self):
@@ -347,8 +332,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_get_tenant(self):
@@ -363,8 +347,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_get_user(self):
@@ -379,8 +362,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_all(self):
@@ -393,8 +375,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_clients(self):
@@ -407,8 +388,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_roles(self):
@@ -421,8 +401,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_schedule_servers(self):
@@ -435,8 +414,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_schedules(self):
@@ -449,8 +427,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_systems(self):
@@ -463,8 +440,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_tenants(self):
@@ -477,8 +453,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_users(self):
@@ -491,8 +466,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_client_schedules(self):
@@ -507,8 +481,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_client_systems(self):
@@ -523,8 +496,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_role_users(self):
@@ -539,8 +511,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_schedule_clients(self):
@@ -555,8 +526,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_system_clients(self):
@@ -571,8 +541,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_system_tenants(self):
@@ -587,8 +556,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_tenant_systems(self):
@@ -603,8 +571,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_tenant_users(self):
@@ -619,8 +586,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_user_roles(self):
@@ -635,8 +601,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_list_user_tenants(self):
@@ -651,8 +616,7 @@ class TestClass():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         out, err = p.communicate()
         error = []
-        if err:
-            error.append(err)
+        if err: error.append(err)
         return error, out
 
     def process_purge_client(self):
