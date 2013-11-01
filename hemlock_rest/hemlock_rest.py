@@ -40,7 +40,7 @@ class Hemlock_REST(object):
         else:
             return object.__new__(*args, **kw)
 
-    def __init__(self, port=8080, host="0.0.0.0"):
+    def __init__(self, port=8080, host="0.0.0.0"): # pragma: no cover
         # !! TODO check for environment variables for hemlock.py
         # !! TODO needs to be able to use no_couchbase flag
         urls = self.setup()
@@ -603,6 +603,6 @@ class run:
         cmd = "hemlock client-run --uuid "+first+" --client "+second
         return os.popen(cmd).read()
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     hemlock_rest = Hemlock_REST()
     hemlock_rest.app.run()
