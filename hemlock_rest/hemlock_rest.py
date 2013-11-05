@@ -37,7 +37,7 @@ class Hemlock_REST(object):
     def __new__(*args, **kw):
         if hasattr(sys, '_called_from_test'):
             print "don't call __init__"
-        else:
+        else: # pragma: no cover
             return object.__new__(*args, **kw)
 
     def __init__(self, port=8080, host="0.0.0.0"): # pragma: no cover
@@ -169,7 +169,7 @@ class query:
     This class is responsible for all data query requests.
     """
     def __init__(self):
-        self.data = ""
+        self.data = "[]"
         try:
             self.data = web.data()
         except:
