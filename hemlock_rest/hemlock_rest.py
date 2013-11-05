@@ -32,7 +32,7 @@ class Hemlock_REST(object):
     """
     This class is responsible for initializing the urls and web server.
     """
-    # !! TOOD
+    # !! TODO
     # need __new__ for tests, but fails to call __init__ when actually running
     def __new__(*args, **kw):
         if hasattr(sys, '_called_from_test'):
