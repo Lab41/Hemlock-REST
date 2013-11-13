@@ -40,7 +40,7 @@ class Hemlock_REST(object):
         else: # pragma: no cover
             return object.__new__(*args, **kw)
 
-    def __init__(self, port=8080, host="0.0.0.0"): # pragma: no cover
+    def __init__(self, port=3001, host="0.0.0.0"): # pragma: no cover
         # !! TODO check for environment variables for hemlock.py
         # !! TODO needs to be able to use no_couchbase flag
         urls = self.setup()
@@ -121,8 +121,7 @@ class root:
 
         :return: returns the information
         """
-        # !! TODO
-        return ""
+        return "Hemlock RESTful Server."
 
 class version:
     """
@@ -134,8 +133,7 @@ class version:
 
         :return: returns the version
         """
-        # !! TODO
-        return ""
+        return "0.1.6"
 
 class favicon:
     """
